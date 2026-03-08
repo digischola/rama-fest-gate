@@ -606,11 +606,16 @@ export default function Index() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {sevaCards.map((c, i) => (
             <AnimateIn key={i} animation="fade-up" delay={i * 100}>
-              <div className="bg-white rounded-[14px] p-[28px_24px] shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-all duration-300 border-t-[3px] border-t-transparent hover:-translate-y-1 hover:border-t-gold h-full flex flex-col">
-                <div className="w-11 h-11 rounded-[10px] bg-gold/[0.12] flex items-center justify-center mb-3.5 text-navy">{c.icon}</div>
-                <h4 className="text-base text-navy mb-1.5">{c.title}</h4>
-                <p className="text-xs text-text-muted-custom leading-[1.5] mb-3.5 flex-1">{c.desc}</p>
-                <a href={c.link} target="_blank" rel="noopener noreferrer" className="inline-block py-2 px-5 rounded-md text-[13px] font-bold no-underline border-[1.5px] border-gold text-navy transition-all hover:bg-gold self-start">Contribute</a>
+              <div className="bg-white rounded-[14px] overflow-hidden shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-all duration-300 border-t-[3px] border-t-transparent hover:-translate-y-1 hover:border-t-gold h-full flex flex-col">
+                <BlurImage src={c.img} alt={c.title} className="w-full h-[180px] object-cover block" loading="lazy" />
+                <div className="p-[20px_24px] flex flex-col flex-1">
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-9 h-9 rounded-[8px] bg-gold/[0.12] flex items-center justify-center text-navy flex-shrink-0">{c.icon}</div>
+                    <h4 className="text-base text-navy">{c.title}</h4>
+                  </div>
+                  <p className="text-xs text-text-muted-custom leading-[1.5] mb-3.5 flex-1">{c.desc}</p>
+                  <a href={c.link} target="_blank" rel="noopener noreferrer" className="inline-block py-2 px-5 rounded-md text-[13px] font-bold no-underline border-[1.5px] border-gold text-navy transition-all hover:bg-gold self-start">Contribute</a>
+                </div>
               </div>
             </AnimateIn>
           ))}
