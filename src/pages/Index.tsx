@@ -634,7 +634,7 @@ export default function Index() {
               <p className="text-[15px] text-white/75 leading-relaxed mb-[22px]">
                 Volunteer for decorations, prasādam distribution, guest welcome, and more. Experience the joy of selfless service.
               </p>
-              <a href="#register" onClick={scrollTo("register")} className="inline-block self-center md:self-start bg-pink text-navy py-3.5 px-8 rounded-lg no-underline font-bold text-[15px] transition-all hover:bg-pink-light hover:-translate-y-0.5 cta-glow">
+              <a href="https://srikrishnamandir.org/volunteer/be-a-volunteer-sri-gaura-pur%e1%b9%87ima/" target="_blank" rel="noopener noreferrer" className="inline-block self-center md:self-start bg-pink text-navy py-3.5 px-8 rounded-lg no-underline font-bold text-[15px] transition-all hover:bg-pink-light hover:-translate-y-0.5 cta-glow">
                 <HandHelping className="inline w-4 h-4 mr-1.5 -mt-0.5" /> Sign Up to Volunteer
               </a>
             </div>
