@@ -14,6 +14,10 @@ import img5 from "@/assets/5.jpg";
 import img6 from "@/assets/6.jpg";
 import img7 from "@/assets/7.jpg";
 import img8 from "@/assets/8.jpg";
+import img9 from "@/assets/9.jpg";
+import img10 from "@/assets/10.jpg";
+import img11 from "@/assets/11.jpg";
+import imgLogo from "@/assets/logo.jpg";
 import img13 from "@/assets/13.png";
 
 /* ═══════════════════════════════════════
