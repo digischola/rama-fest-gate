@@ -471,35 +471,39 @@ export default function Index() {
         </div>
       </div>
 
-      {/* ═══ GALLERY ═══ */}
+      {/* ═══ GALLERY (Embla Carousel) ═══ */}
       <div className="px-4 md:px-5 max-w-[1100px] mx-auto pb-[50px] md:pb-[70px]">
         <AnimateIn animation="fade-up">
           <SectionHeader overline="Past Celebrations" title="Glimpses from Our Temple" sub="Real moments from ISKM Singapore celebrations" />
         </AnimateIn>
         <div className="relative">
-          {/* Arrow buttons (desktop) */}
           <button
-            onClick={() => scrollGallery("left")}
-            className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg items-center justify-center border-none cursor-pointer hover:bg-cream transition-colors"
-            aria-label="Scroll gallery left"
+            onClick={scrollGalleryPrev}
+            className="absolute -left-1 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center border-none cursor-pointer hover:bg-cream transition-colors"
+            aria-label="Previous slide"
           >
             <ChevronLeft size={20} className="text-navy" />
           </button>
           <button
-            onClick={() => scrollGallery("right")}
-            className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg items-center justify-center border-none cursor-pointer hover:bg-cream transition-colors"
-            aria-label="Scroll gallery right"
+            onClick={scrollGalleryNext}
+            className="absolute -right-1 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center border-none cursor-pointer hover:bg-cream transition-colors"
+            aria-label="Next slide"
           >
             <ChevronRight size={20} className="text-navy" />
           </button>
-          <div ref={galleryRef} className="gallery-strip flex gap-3.5 overflow-x-auto py-2.5 pb-5" style={{ scrollSnapType: "x mandatory" }}>
-            {galleryImgs.map((g, i) => (
-              <AnimateIn key={i} animation="scale-in" delay={i * 80}>
-                <BlurImage src={g.src} alt={g.alt} loading="lazy"
-                  className="w-[290px] h-[210px] object-cover rounded-xl flex-shrink-0 transition-transform duration-300 hover:scale-[1.03]"
-                  style={{ scrollSnapAlign: "start" } as React.CSSProperties} />
-              </AnimateIn>
-            ))}
+          <div ref={emblaRef} className="overflow-hidden rounded-xl mx-6 md:mx-8">
+            <div className="flex">
+              {galleryImgs.map((g, i) => (
+                <div key={i} className="flex-[0_0_100%] md:flex-[0_0_33.333%] min-w-0 px-2">
+                  <BlurImage
+                    src={g.src}
+                    alt={g.alt}
+                    loading="lazy"
+                    className="w-full h-[250px] md:h-[280px] object-cover rounded-xl transition-transform duration-300 hover:scale-[1.03]"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
