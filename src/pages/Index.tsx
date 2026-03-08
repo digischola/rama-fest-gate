@@ -536,6 +536,7 @@ export default function Index() {
 
       {/* ═══ FOOTER ═══ */}
       <footer className="bg-navy-deep text-white/[0.45] text-center py-7 px-5 text-[13px]">
+        <img src={imgLogo} alt="ISKM" className="h-[38px] w-[38px] rounded-full opacity-70 mx-auto mb-2.5" />
         <p>© 2026 International Sri Krishna Mandir · <a href="https://srikrishnamandir.org" className="text-gold no-underline hover:underline">srikrishnamandir.org</a> · <a href="mailto:contact@srikrishnamandir.org" className="text-gold no-underline hover:underline">contact@srikrishnamandir.org</a></p>
       </footer>
 
