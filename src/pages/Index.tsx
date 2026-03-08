@@ -549,6 +549,47 @@ export default function Index() {
         </AnimateIn>
       </div>
 
+      {/* ═══ ABOUT LORD RAMA (Significance) ═══ */}
+      <div id="about" className="py-[50px] md:py-[70px] px-5" style={{ background: "linear-gradient(180deg, hsl(var(--cream-warm)), hsl(var(--cream)))" }}>
+        <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[30px] md:gap-[50px] items-center">
+          <AnimateIn animation="fade-up">
+            <div className="relative rounded-2xl overflow-hidden aspect-auto md:aspect-[4/5] min-h-[300px]">
+              <BlurImage src={img7} alt="Deities of Lord Rama, Sita, and Lakshmana at ISKM" className="w-full h-full object-cover block" loading="lazy" />
+              <div className="absolute inset-0 flex flex-col items-center justify-end p-10 text-center" style={{ background: "linear-gradient(180deg, rgba(22,45,88,0.3), rgba(22,45,88,0.75))" }}>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-[90px] font-bold text-gold/[0.08] leading-none whitespace-nowrap">श्रीराम</div>
+                <div className="font-display text-2xl font-semibold leading-[1.4] mb-3 text-gold relative z-[1]">श्रीरामचन्द्राय नमः</div>
+                <p className="text-[13px] text-white/80 leading-[1.7] max-w-[280px] font-body relative z-[1]">Obeisances unto Lord Śrī Rāmacandra — the embodiment of dharma, compassion, and divine grace.</p>
+              </div>
+            </div>
+          </AnimateIn>
+          <AnimateIn animation="fade-up" delay={150}>
+            <div>
+              <div className="text-[11px] font-bold tracking-[2.5px] uppercase text-navy-2 mb-3 font-body">The Significance</div>
+              <h2 className="text-[30px] text-navy mb-[18px] leading-[1.2]">Who is Lord Śrī Rāma?</h2>
+              <p className="text-[15px] text-text-dark leading-[1.8] mb-3.5">
+                Śrī Rāma Navamī celebrates the appearance of Lord Śrī Rāmacandra — the seventh incarnation of the Supreme Lord Viṣṇu. Born as the eldest son of King Daśaratha and Queen Kauśalyā in the Solar dynasty at Ayodhyā, He descended to establish dharma and exemplify the ideal of righteous living.
+              </p>
+              <p className="text-[15px] text-text-dark leading-[1.8] mb-3.5">
+                Lord Rāma's life, as narrated in the epic Rāmāyaṇa by sage Vālmīki, embodies truth, honour, devotion, and selfless love. His name itself is considered a great mantra — simply chanting "Rāma" purifies the heart and brings peace.
+              </p>
+              <button onClick={() => setReadMore(!readMore)} className="text-navy-2 font-bold cursor-pointer border-none bg-transparent font-body text-sm p-0 hover:underline">
+                {readMore ? "Show less ↑" : "Read more about the festival ↓"}
+              </button>
+              <div className={`read-more-content ${readMore ? "open" : ""} mt-2.5`}>
+                <p className="text-[15px] text-text-dark leading-[1.8] mb-3.5">
+                  Rāma Navamī falls on the ninth day (navamī) of the bright fortnight (Śukla Pakṣa) of the month of Caitra. According to the Vedic calendar, Lord Rāma appeared at noon — in the Madhyāhna period — which is why the main worship and celebrations take place during midday and evening.
+                </p>
+                <p className="text-[15px] text-text-dark leading-[1.8] mb-3.5">
+                  At ISKM, we celebrate this sacred occasion with a grand evening program that includes the sacred bathing ceremony (Abhiṣeka) of the deities, soul-stirring congregational chanting (kīrtana), a dramatic performance of the Rāmāyaṇa, and a sumptuous feast of sanctified vegetarian food (prasādam) served free to all.
+                </p>
+                <p className="text-[15px] text-text-dark leading-[1.8]">
+                  Srila Prabhupada, the founder-ācārya, taught that Lord Rāma's mission was identical to Lord Kṛṣṇa's — to re-establish dharma and attract all living beings back to their eternal, loving relationship with the Supreme.
+                </p>
+              </div>
+            </div>
+          </AnimateIn>
+        </div>
+      </div>
 
       {/* ═══ SEVA / DONATION ═══ */}
       <div id="donate" className="py-[50px] md:py-[70px] px-4 md:px-5 max-w-[1100px] mx-auto">
