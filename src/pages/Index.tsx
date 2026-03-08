@@ -14,6 +14,10 @@ import img5 from "@/assets/5.jpg";
 import img6 from "@/assets/6.jpg";
 import img7 from "@/assets/7.jpg";
 import img8 from "@/assets/8.jpg";
+import img9 from "@/assets/9.jpg";
+import img10 from "@/assets/10.jpg";
+import img11 from "@/assets/11.jpg";
+import imgLogo from "@/assets/logo.jpg";
 import img13 from "@/assets/13.png";
 
 /* ═══════════════════════════════════════
@@ -102,8 +106,8 @@ export default function Index() {
   const expectCards = [
     { img: img5, title: "Sacred Abhiṣeka", desc: "Witness the grand bathing ceremony of the deities with milk, ghee, yogurt, and sanctified waters." },
     { img: img6, title: "Divine Kīrtana", desc: "Join heart-stirring congregational chanting that fills the temple with spiritual vibrations." },
-    { img: null, title: "Rāmāyaṇa Drama", desc: "Watch a captivating theatrical performance depicting the glories of Lord Rāma's pastimes." },
-    { img: null, title: "Blessed Prasādam", desc: "Relish sanctified vegetarian food offered to the Lord — served free to all attendees." },
+    { img: img9, title: "Rāmāyaṇa Drama", desc: "Watch a captivating theatrical performance depicting the glories of Lord Rāma's pastimes." },
+    { img: img10, title: "Blessed Prasādam", desc: "Relish sanctified vegetarian food offered to the Lord — served free to all attendees." },
     { img: img3, title: "Spiritual Discourse", desc: "Hear inspiring insights on the significance of Rāma Navamī and the teachings of the Rāmāyaṇa." },
     { img: img8, title: "Community & Family", desc: "Bring the whole family for children's performances, book stalls, and a warm atmosphere." },
   ];
@@ -114,7 +118,7 @@ export default function Index() {
     { src: img7, alt: "Close-up of deities with fruit garlands" },
     { src: img4, alt: "Sacred Shaligrama puja" },
     { src: img3, alt: "Full altar view with decorations" },
-    { src: img1, alt: "Temple celebration" },
+    { src: img9, alt: "Ramayana drama on stage" },
   ];
 
   const timeline = [
@@ -146,6 +150,7 @@ export default function Index() {
       {/* ═══ NAV ═══ */}
       <nav className={`fixed top-[37px] left-0 right-0 z-[1000] h-14 flex items-center justify-between px-[30px] border-b border-navy/[0.06] transition-shadow duration-300 backdrop-blur-[16px] ${navScrolled ? "shadow-[0_2px_20px_rgba(30,58,110,0.08)]" : ""}`} style={{ background: "hsla(30, 75%, 96%, 0.92)" }}>
         <a href="#" className="flex items-center gap-2.5 font-display text-lg font-bold text-navy no-underline">
+          <img src={imgLogo} alt="ISKM" className="h-8 rounded-full" />
           <span>ISKM Singapore</span>
         </a>
         <div className="flex items-center gap-0 md:gap-[26px]">
@@ -436,8 +441,8 @@ export default function Index() {
       {/* ═══ VOLUNTEER ═══ */}
       <div className="max-w-[1100px] mx-auto px-5 pb-[70px]">
         <div className="rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 min-h-[340px]" style={{ background: "linear-gradient(135deg, hsl(var(--navy)), hsl(var(--navy-deep)))" }}>
-          <div className="min-h-[220px] md:min-h-[300px] overflow-hidden bg-navy-2/30 flex items-center justify-center text-gold/30 text-sm font-body">
-            Image coming soon
+          <div className="min-h-[220px] md:min-h-[300px] overflow-hidden">
+            <img src={img11} alt="Volunteers at ISKM Singapore" className="w-full h-full object-cover block" loading="lazy" />
           </div>
           <div className="p-[30px_22px] md:p-[45px_40px] flex flex-col justify-center text-center md:text-left">
             <h2 className="text-[26px] text-white mb-2.5">Serve & Be Blessed</h2>
@@ -465,6 +470,7 @@ export default function Index() {
             />
           </div>
           <div className="p-[28px_22px] md:p-10 flex flex-col justify-center">
+            <img src={imgLogo} alt="ISKM" className="h-[45px] w-[45px] rounded-full mb-3.5" />
             <h3 className="text-xl text-navy mb-[18px]">International Sri Krishna Mandir</h3>
             <div className="flex gap-3 mb-3 text-sm text-text-dark">
               <MapPin className="text-gold mt-0.5 flex-shrink-0" size={14} />
@@ -530,6 +536,7 @@ export default function Index() {
 
       {/* ═══ FOOTER ═══ */}
       <footer className="bg-navy-deep text-white/[0.45] text-center py-7 px-5 text-[13px]">
+        <img src={imgLogo} alt="ISKM" className="h-[38px] w-[38px] rounded-full opacity-70 mx-auto mb-2.5" />
         <p>© 2026 International Sri Krishna Mandir · <a href="https://srikrishnamandir.org" className="text-gold no-underline hover:underline">srikrishnamandir.org</a> · <a href="mailto:contact@srikrishnamandir.org" className="text-gold no-underline hover:underline">contact@srikrishnamandir.org</a></p>
       </footer>
 
