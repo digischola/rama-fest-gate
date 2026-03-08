@@ -343,10 +343,14 @@ export default function Index() {
           </div>
         </div>
 
-        {/* Registration card */}
-        <div id="register" className="max-w-[520px] mx-auto px-5 md:px-[30px] lg:px-[50px] pt-[25px] md:pt-[30px] lg:pt-[35px] pb-[35px] md:pb-[40px] lg:pb-[50px] relative z-[2]">
+        <div className="pb-[35px] md:pb-[40px] lg:pb-[50px]" />
+      </section>
+
+      {/* ═══ REGISTRATION FORM (separate section) ═══ */}
+      <div id="register" className="py-[40px] md:py-[60px] px-4 md:px-5" style={{ background: "linear-gradient(180deg, hsl(var(--cream-warm)), hsl(var(--cream)))" }}>
+        <div className="max-w-[520px] mx-auto">
           <AnimateIn animation="scale-in">
-            <div className="bg-white rounded-2xl p-6 sm:p-[28px] w-full shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+            <div className="bg-white rounded-2xl p-6 sm:p-[28px] w-full shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
               {!registered ? (
                 <>
                   <div className="text-center mb-[18px]">
@@ -355,15 +359,9 @@ export default function Index() {
                     </span>
                     <h3 className="text-xl text-navy mb-1">Reserve Your Seat</h3>
                     <p className="text-[13px] text-text-muted-custom">Fill in below to register for the celebration</p>
-                    {/* Form progress dots */}
                     <div className="flex items-center justify-center gap-1.5 mt-2">
                       {[1, 2, 3].map((step) => (
-                        <div
-                          key={step}
-                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                            step <= filledFields + 1 ? "bg-gold scale-110" : "bg-border"
-                          }`}
-                        />
+                        <div key={step} className={`w-2 h-2 rounded-full transition-all duration-300 ${step <= filledFields + 1 ? "bg-gold scale-110" : "bg-border"}`} />
                       ))}
                       <span className="text-[10px] text-text-muted-custom ml-1.5">Almost there!</span>
                     </div>
@@ -429,7 +427,7 @@ export default function Index() {
             </div>
           </AnimateIn>
         </div>
-      </section>
+      </div>
 
       {/* ═══ SOCIAL PROOF ═══ */}
       <div className="bg-white border-b border-black/[0.04] py-[18px] px-5">
