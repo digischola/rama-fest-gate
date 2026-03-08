@@ -118,7 +118,7 @@ export default function Index() {
     { src: img7, alt: "Close-up of deities with fruit garlands" },
     { src: img4, alt: "Sacred Shaligrama puja" },
     { src: img3, alt: "Full altar view with decorations" },
-    { src: img1, alt: "Temple celebration" },
+    { src: img9, alt: "Ramayana drama on stage" },
   ];
 
   const timeline = [
