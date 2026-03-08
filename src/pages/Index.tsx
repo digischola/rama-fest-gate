@@ -197,11 +197,8 @@ export default function Index() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const scrollGallery = (dir: "left" | "right") => {
-    const el = galleryRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir === "left" ? -310 : 310, behavior: "smooth" });
-  };
+  const scrollGalleryPrev = () => emblaApi?.scrollPrev();
+  const scrollGalleryNext = () => emblaApi?.scrollNext();
 
   // Form validation helpers
   const isNameValid = name.trim().length >= 2;
