@@ -470,6 +470,7 @@ export default function Index() {
             />
           </div>
           <div className="p-[28px_22px] md:p-10 flex flex-col justify-center">
+            <img src={imgLogo} alt="ISKM" className="h-[45px] w-[45px] rounded-full mb-3.5" />
             <h3 className="text-xl text-navy mb-[18px]">International Sri Krishna Mandir</h3>
             <div className="flex gap-3 mb-3 text-sm text-text-dark">
               <MapPin className="text-gold mt-0.5 flex-shrink-0" size={14} />
