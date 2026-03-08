@@ -235,11 +235,11 @@ export default function Index() {
   ];
 
   const sevaCards = [
-    { icon: <Droplets size={18} />, title: "Abhiṣeka Sevā", desc: "Sponsor the grand bathing ceremony with milk, ghee, yogurt & sacred waters" },
-    { icon: <Soup size={18} />, title: "Annadānam Sevā", desc: "Feed the community — sponsor the special Rāma Navamī prasādam feast" },
-    { icon: <Sprout size={18} />, title: "Mandira Puṣpa Sevā", desc: "Help adorn the temple with flowers, mango leaves, and festive decorations" },
-    { icon: <Fan size={18} />, title: "Puṣpa-Alaṅkāra", desc: "Contribute to exquisite flower garland decorations for the deities" },
-    { icon: <Heart size={18} />, title: "General Donation", desc: "Support the festival in any way that feels right for you" },
+    { icon: <Droplets size={18} />, title: "Abhiṣeka Sevā", desc: "Sponsor the grand bathing ceremony with milk, ghee, yogurt & sacred waters", link: "https://srikrishnamandir.org/product/abhiseka-seva/" },
+    { icon: <Soup size={18} />, title: "Annadānam Sevā", desc: "Feed the community — sponsor the special Rāma Navamī prasādam feast", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-annadanam-seva/" },
+    { icon: <Sprout size={18} />, title: "Mandira Puṣpa Sevā", desc: "Help adorn the temple with flowers, mango leaves, and festive decorations", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-mandira-pu%E1%B9%A3pa-seva/" },
+    { icon: <Fan size={18} />, title: "Puṣpa-Alaṅkāra", desc: "Contribute to exquisite flower garland decorations for the deities", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-pu%E1%B9%A3pa-ala%E1%B9%85kara-seva/" },
+    { icon: <Heart size={18} />, title: "General Donation", desc: "Support the festival in any way that feels right for you", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-outright-contribution/" },
   ];
 
   return (
@@ -597,19 +597,17 @@ export default function Index() {
         <AnimateIn animation="fade-up">
           <SectionHeader overline="Support the Festival" title="Sevā Opportunities" sub="Contribute to making this celebration possible for everyone" />
         </AnimateIn>
-        <div className="donation-scroll-wrap overflow-x-auto pb-5" style={{ scrollSnapType: "x mandatory" }}>
-          <div className="flex gap-[18px] w-max">
-            {sevaCards.map((c, i) => (
-              <AnimateIn key={i} animation="fade-up" delay={i * 100}>
-                <div className="w-[230px] sm:w-[260px] bg-white rounded-[14px] p-[28px_24px] flex-shrink-0 shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-all duration-300 border-t-[3px] border-t-transparent hover:-translate-y-1 hover:border-t-gold" style={{ scrollSnapAlign: "start" }}>
-                  <div className="w-11 h-11 rounded-[10px] bg-gold/[0.12] flex items-center justify-center mb-3.5 text-navy">{c.icon}</div>
-                  <h4 className="text-base text-navy mb-1.5">{c.title}</h4>
-                  <p className="text-xs text-text-muted-custom leading-[1.5] mb-3.5">{c.desc}</p>
-                  <a href="#" className="inline-block py-2 px-5 rounded-md text-[13px] font-bold no-underline border-[1.5px] border-gold text-navy transition-all hover:bg-gold">Contribute</a>
-                </div>
-              </AnimateIn>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {sevaCards.map((c, i) => (
+            <AnimateIn key={i} animation="fade-up" delay={i * 100}>
+              <div className="bg-white rounded-[14px] p-[28px_24px] shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-all duration-300 border-t-[3px] border-t-transparent hover:-translate-y-1 hover:border-t-gold h-full flex flex-col">
+                <div className="w-11 h-11 rounded-[10px] bg-gold/[0.12] flex items-center justify-center mb-3.5 text-navy">{c.icon}</div>
+                <h4 className="text-base text-navy mb-1.5">{c.title}</h4>
+                <p className="text-xs text-text-muted-custom leading-[1.5] mb-3.5 flex-1">{c.desc}</p>
+                <a href={c.link} target="_blank" rel="noopener noreferrer" className="inline-block py-2 px-5 rounded-md text-[13px] font-bold no-underline border-[1.5px] border-gold text-navy transition-all hover:bg-gold self-start">Contribute</a>
+              </div>
+            </AnimateIn>
+          ))}
         </div>
       </div>
 
