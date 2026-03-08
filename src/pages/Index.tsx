@@ -440,8 +440,8 @@ export default function Index() {
       {/* ═══ VOLUNTEER ═══ */}
       <div className="max-w-[1100px] mx-auto px-5 pb-[70px]">
         <div className="rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 min-h-[340px]" style={{ background: "linear-gradient(135deg, hsl(var(--navy)), hsl(var(--navy-deep)))" }}>
-          <div className="min-h-[220px] md:min-h-[300px] overflow-hidden bg-navy-2/30 flex items-center justify-center text-gold/30 text-sm font-body">
-            Image coming soon
+          <div className="min-h-[220px] md:min-h-[300px] overflow-hidden">
+            <img src={img11} alt="Volunteers at ISKM Singapore" className="w-full h-full object-cover block" loading="lazy" />
           </div>
           <div className="p-[30px_22px] md:p-[45px_40px] flex flex-col justify-center text-center md:text-left">
             <h2 className="text-[26px] text-white mb-2.5">Serve & Be Blessed</h2>
