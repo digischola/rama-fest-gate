@@ -241,11 +241,11 @@ export default function Index() {
   ];
 
   const sevaCards = [
-    { icon: <Droplets size={18} />, title: "Abhiṣeka Sevā", desc: "Sponsor the grand bathing ceremony with milk, ghee, yogurt & sacred waters", link: "https://srikrishnamandir.org/product/abhiseka-seva/" },
-    { icon: <Soup size={18} />, title: "Annadānam Sevā", desc: "Feed the community — sponsor the special Rāma Navamī prasādam feast", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-annadanam-seva/" },
-    { icon: <Sprout size={18} />, title: "Mandira Puṣpa Sevā", desc: "Help adorn the temple with flowers, mango leaves, and festive decorations", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-mandira-pu%E1%B9%A3pa-seva/" },
-    { icon: <Fan size={18} />, title: "Puṣpa-Alaṅkāra", desc: "Contribute to exquisite flower garland decorations for the deities", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-pu%E1%B9%A3pa-ala%E1%B9%85kara-seva/" },
-    { icon: <Heart size={18} />, title: "General Donation", desc: "Support the festival in any way that feels right for you", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-outright-contribution/" },
+    { icon: <Droplets size={18} />, title: "Abhiṣeka Sevā", desc: "Sponsor the grand bathing ceremony with milk, ghee, yogurt & sacred waters", link: "https://srikrishnamandir.org/product/abhiseka-seva/", img: imgAbhisheka },
+    { icon: <Soup size={18} />, title: "Annadānam Sevā", desc: "Feed the community — sponsor the special Rāma Navamī prasādam feast", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-annadanam-seva/", img: imgAnnadanam },
+    { icon: <Sprout size={18} />, title: "Mandira Puṣpa Sevā", desc: "Help adorn the temple with flowers, mango leaves, and festive decorations", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-mandira-pu%E1%B9%A3pa-seva/", img: imgPushpa },
+    { icon: <Fan size={18} />, title: "Puṣpa-Alaṅkāra", desc: "Contribute to exquisite flower garland decorations for the deities", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-pu%E1%B9%A3pa-ala%E1%B9%85kara-seva/", img: imgAlankara },
+    { icon: <Heart size={18} />, title: "General Donation", desc: "Support the festival in any way that feels right for you", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-outright-contribution/", img: imgCharity },
   ];
 
   return (
