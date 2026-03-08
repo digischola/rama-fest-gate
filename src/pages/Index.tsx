@@ -150,6 +150,7 @@ export default function Index() {
       {/* ═══ NAV ═══ */}
       <nav className={`fixed top-[37px] left-0 right-0 z-[1000] h-14 flex items-center justify-between px-[30px] border-b border-navy/[0.06] transition-shadow duration-300 backdrop-blur-[16px] ${navScrolled ? "shadow-[0_2px_20px_rgba(30,58,110,0.08)]" : ""}`} style={{ background: "hsla(30, 75%, 96%, 0.92)" }}>
         <a href="#" className="flex items-center gap-2.5 font-display text-lg font-bold text-navy no-underline">
+          <img src={imgLogo} alt="ISKM" className="h-8 rounded-full" />
           <span>ISKM Singapore</span>
         </a>
         <div className="flex items-center gap-0 md:gap-[26px]">
