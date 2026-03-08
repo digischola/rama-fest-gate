@@ -21,6 +21,12 @@ import img10 from "@/assets/10.jpg";
 import img11 from "@/assets/11.jpg";
 import imgLogo from "@/assets/logo.jpg";
 import img13 from "@/assets/13.png";
+import imgPrasadam from "@/assets/prasadam.png";
+import imgAbhisheka from "@/assets/abhisheka_seva.jpg";
+import imgAlankara from "@/assets/alankara.jpg";
+import imgAnnadanam from "@/assets/annadanam.jpg";
+import imgCharity from "@/assets/charity.jpg";
+import imgPushpa from "@/assets/pushpa_seva.jpg";
 
 import { AnimateIn } from "@/components/AnimateIn";
 import { CountUp } from "@/components/CountUp";
@@ -211,7 +217,7 @@ export default function Index() {
     { img: img5, title: "Sacred Abhiṣeka", desc: "Witness the grand bathing ceremony of the deities with milk, ghee, yogurt, and sanctified waters." },
     { img: img6, title: "Divine Kīrtana", desc: "Join heart-stirring congregational chanting that fills the temple with spiritual vibrations." },
     { img: img9, title: "Rāmāyaṇa Drama", desc: "Watch a captivating theatrical performance depicting the glories of Lord Rāma's pastimes." },
-    { img: img10, title: "Blessed Prasādam", desc: "Relish sanctified vegetarian food offered to the Lord — served free to all attendees." },
+    { img: imgPrasadam, title: "Blessed Prasādam", desc: "Relish sanctified vegetarian food offered to the Lord — served free to all attendees." },
     { img: img3, title: "Spiritual Discourse", desc: "Hear inspiring insights on the significance of Rāma Navamī and the teachings of the Rāmāyaṇa." },
     { img: img8, title: "Community & Family", desc: "Bring the whole family for children's performances, book stalls, and a warm atmosphere." },
   ];
@@ -235,11 +241,11 @@ export default function Index() {
   ];
 
   const sevaCards = [
-    { icon: <Droplets size={18} />, title: "Abhiṣeka Sevā", desc: "Sponsor the grand bathing ceremony with milk, ghee, yogurt & sacred waters", link: "https://srikrishnamandir.org/product/abhiseka-seva/" },
-    { icon: <Soup size={18} />, title: "Annadānam Sevā", desc: "Feed the community — sponsor the special Rāma Navamī prasādam feast", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-annadanam-seva/" },
-    { icon: <Sprout size={18} />, title: "Mandira Puṣpa Sevā", desc: "Help adorn the temple with flowers, mango leaves, and festive decorations", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-mandira-pu%E1%B9%A3pa-seva/" },
-    { icon: <Fan size={18} />, title: "Puṣpa-Alaṅkāra", desc: "Contribute to exquisite flower garland decorations for the deities", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-pu%E1%B9%A3pa-ala%E1%B9%85kara-seva/" },
-    { icon: <Heart size={18} />, title: "General Donation", desc: "Support the festival in any way that feels right for you", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-outright-contribution/" },
+    { icon: <Droplets size={18} />, title: "Abhiṣeka Sevā", desc: "Sponsor the grand bathing ceremony with milk, ghee, yogurt & sacred waters", link: "https://srikrishnamandir.org/product/abhiseka-seva/", img: imgAbhisheka },
+    { icon: <Soup size={18} />, title: "Annadānam Sevā", desc: "Feed the community — sponsor the special Rāma Navamī prasādam feast", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-annadanam-seva/", img: imgAnnadanam },
+    { icon: <Sprout size={18} />, title: "Mandira Puṣpa Sevā", desc: "Help adorn the temple with flowers, mango leaves, and festive decorations", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-mandira-pu%E1%B9%A3pa-seva/", img: imgPushpa },
+    { icon: <Fan size={18} />, title: "Puṣpa-Alaṅkāra", desc: "Contribute to exquisite flower garland decorations for the deities", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-pu%E1%B9%A3pa-ala%E1%B9%85kara-seva/", img: imgAlankara },
+    { icon: <Heart size={18} />, title: "General Donation", desc: "Support the festival in any way that feels right for you", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-outright-contribution/", img: imgCharity },
   ];
 
   return (
@@ -600,11 +606,16 @@ export default function Index() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {sevaCards.map((c, i) => (
             <AnimateIn key={i} animation="fade-up" delay={i * 100}>
-              <div className="bg-white rounded-[14px] p-[28px_24px] shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-all duration-300 border-t-[3px] border-t-transparent hover:-translate-y-1 hover:border-t-gold h-full flex flex-col">
-                <div className="w-11 h-11 rounded-[10px] bg-gold/[0.12] flex items-center justify-center mb-3.5 text-navy">{c.icon}</div>
-                <h4 className="text-base text-navy mb-1.5">{c.title}</h4>
-                <p className="text-xs text-text-muted-custom leading-[1.5] mb-3.5 flex-1">{c.desc}</p>
-                <a href={c.link} target="_blank" rel="noopener noreferrer" className="inline-block py-2 px-5 rounded-md text-[13px] font-bold no-underline border-[1.5px] border-gold text-navy transition-all hover:bg-gold self-start">Contribute</a>
+              <div className="bg-white rounded-[14px] overflow-hidden shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-all duration-300 border-t-[3px] border-t-transparent hover:-translate-y-1 hover:border-t-gold h-full flex flex-col">
+                <BlurImage src={c.img} alt={c.title} className="w-full h-[180px] object-cover block" loading="lazy" />
+                <div className="p-[20px_24px] flex flex-col flex-1">
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-9 h-9 rounded-[8px] bg-gold/[0.12] flex items-center justify-center text-navy flex-shrink-0">{c.icon}</div>
+                    <h4 className="text-base text-navy">{c.title}</h4>
+                  </div>
+                  <p className="text-xs text-text-muted-custom leading-[1.5] mb-3.5 flex-1">{c.desc}</p>
+                  <a href={c.link} target="_blank" rel="noopener noreferrer" className="inline-block py-2 px-5 rounded-md text-[13px] font-bold no-underline border-[1.5px] border-gold text-navy transition-all hover:bg-gold self-start">Contribute</a>
+                </div>
               </div>
             </AnimateIn>
           ))}
@@ -623,7 +634,7 @@ export default function Index() {
               <p className="text-[15px] text-white/75 leading-relaxed mb-[22px]">
                 Volunteer for decorations, prasādam distribution, guest welcome, and more. Experience the joy of selfless service.
               </p>
-              <a href="#register" onClick={scrollTo("register")} className="inline-block self-center md:self-start bg-pink text-navy py-3.5 px-8 rounded-lg no-underline font-bold text-[15px] transition-all hover:bg-pink-light hover:-translate-y-0.5 cta-glow">
+              <a href="https://srikrishnamandir.org/volunteer/be-a-volunteer-sri-gaura-pur%e1%b9%87ima/" target="_blank" rel="noopener noreferrer" className="inline-block self-center md:self-start bg-pink text-navy py-3.5 px-8 rounded-lg no-underline font-bold text-[15px] transition-all hover:bg-pink-light hover:-translate-y-0.5 cta-glow">
                 <HandHelping className="inline w-4 h-4 mr-1.5 -mt-0.5" /> Sign Up to Volunteer
               </a>
             </div>
