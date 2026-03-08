@@ -149,8 +149,22 @@ export default function Index() {
   const [attendees, setAttendees] = useState("2");
   const [volunteer, setVolunteer] = useState("no");
 
-  // Gallery ref
-  const galleryRef = useRef<HTMLDivElement>(null);
+  // Gallery carousel
+  const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }));
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start", slidesToScroll: 1 }, [autoplayPlugin.current]);
+  const [galCanPrev, setGalCanPrev] = useState(true);
+  const [galCanNext, setGalCanNext] = useState(true);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => {
+      setGalCanPrev(emblaApi.canScrollPrev());
+      setGalCanNext(emblaApi.canScrollNext());
+    };
+    emblaApi.on("select", onSelect);
+    onSelect();
+    return () => { emblaApi.off("select", onSelect); };
+  }, [emblaApi]);
 
   useEffect(() => {
     const onScroll = () => {
