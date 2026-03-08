@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Calendar, Clock, MapPin, Flame, Users, UtensilsCrossed, Baby,
   Ticket, ShieldCheck, Check, Info, Droplets, Soup, Sprout, Fan, Heart,
