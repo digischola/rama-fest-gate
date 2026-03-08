@@ -217,7 +217,7 @@ export default function Index() {
     { img: img5, title: "Sacred Abhiṣeka", desc: "Witness the grand bathing ceremony of the deities with milk, ghee, yogurt, and sanctified waters." },
     { img: img6, title: "Divine Kīrtana", desc: "Join heart-stirring congregational chanting that fills the temple with spiritual vibrations." },
     { img: img9, title: "Rāmāyaṇa Drama", desc: "Watch a captivating theatrical performance depicting the glories of Lord Rāma's pastimes." },
-    { img: img10, title: "Blessed Prasādam", desc: "Relish sanctified vegetarian food offered to the Lord — served free to all attendees." },
+    { img: imgPrasadam, title: "Blessed Prasādam", desc: "Relish sanctified vegetarian food offered to the Lord — served free to all attendees." },
     { img: img3, title: "Spiritual Discourse", desc: "Hear inspiring insights on the significance of Rāma Navamī and the teachings of the Rāmāyaṇa." },
     { img: img8, title: "Community & Family", desc: "Bring the whole family for children's performances, book stalls, and a warm atmosphere." },
   ];
