@@ -21,6 +21,12 @@ import img10 from "@/assets/10.jpg";
 import img11 from "@/assets/11.jpg";
 import imgLogo from "@/assets/logo.jpg";
 import img13 from "@/assets/13.png";
+import imgPrasadam from "@/assets/prasadam.png";
+import imgAbhisheka from "@/assets/abhisheka_seva.jpg";
+import imgAlankara from "@/assets/alankara.jpg";
+import imgAnnadanam from "@/assets/annadanam.jpg";
+import imgCharity from "@/assets/charity.jpg";
+import imgPushpa from "@/assets/pushpa_seva.jpg";
 
 import { AnimateIn } from "@/components/AnimateIn";
 import { CountUp } from "@/components/CountUp";
