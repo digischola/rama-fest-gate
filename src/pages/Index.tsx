@@ -32,6 +32,7 @@ import { AnimateIn } from "@/components/AnimateIn";
 import { CountUp } from "@/components/CountUp";
 import { MobileNav } from "@/components/MobileNav";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 /* ═══════════════════════════════════════
    COUNTDOWN HOOK
