@@ -27,6 +27,11 @@ import imgAlankara from "@/assets/alankara.jpg";
 import imgAnnadanam from "@/assets/annadanam.jpg";
 import imgCharity from "@/assets/charity.jpg";
 import imgPushpa from "@/assets/pushpa_seva.jpg";
+import img12 from "@/assets/12.jpg";
+import img14 from "@/assets/14.jpg";
+import img15 from "@/assets/15.jpg";
+import img16 from "@/assets/16.jpg";
+import img17 from "@/assets/17.jpg";
 
 import { AnimateIn } from "@/components/AnimateIn";
 import { CountUp } from "@/components/CountUp";
