@@ -232,7 +232,7 @@ export default function Index() {
   const galleryImgs = [
     { src: img7, alt: "Close-up of deities with fruit garlands" },
     { src: img4, alt: "Sacred Shaligrama puja" },
-    { src: img3, alt: "Full altar view with decorations" },
+    { src: img18, alt: "Children singing devotional songs" },
     { src: img9, alt: "Ramayana drama on stage" },
     { src: img12, alt: "Devotees enjoying prasadam feast" },
     { src: img14, alt: "Dramatic performance by devotee" },
