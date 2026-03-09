@@ -27,6 +27,11 @@ import imgAlankara from "@/assets/alankara.jpg";
 import imgAnnadanam from "@/assets/annadanam.jpg";
 import imgCharity from "@/assets/charity.jpg";
 import imgPushpa from "@/assets/pushpa_seva.jpg";
+import img12 from "@/assets/12.jpg";
+import img14 from "@/assets/14.jpg";
+import img15 from "@/assets/15.jpg";
+import img16 from "@/assets/16.jpg";
+import img17 from "@/assets/17.jpg";
 
 import { AnimateIn } from "@/components/AnimateIn";
 import { CountUp } from "@/components/CountUp";
@@ -230,6 +235,10 @@ export default function Index() {
     { src: img4, alt: "Sacred Shaligrama puja" },
     { src: img3, alt: "Full altar view with decorations" },
     { src: img9, alt: "Ramayana drama on stage" },
+    { src: img12, alt: "Devotees enjoying prasadam feast" },
+    { src: img14, alt: "Dramatic performance by devotee" },
+    { src: img16, alt: "Mother and child at the temple" },
+    { src: img17, alt: "Joyful dancing during kirtan" },
   ];
 
   const timeline = [
