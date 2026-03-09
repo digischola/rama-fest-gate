@@ -263,7 +263,7 @@ export default function Index() {
       <a href="#main-content" className="skip-link">Skip to content</a>
 
       {/* ═══ RIBBON ═══ */}
-      <div className="fixed top-0 left-0 right-0 z-[1001] bg-gradient-to-br from-navy-deep to-navy text-white text-center py-2.5 px-5 text-[13px] font-semibold tracking-wide">
+      <div id="top-ribbon" className="fixed top-0 left-0 right-0 z-[1001] bg-gradient-to-br from-navy-deep to-navy text-white text-center py-2.5 px-5 text-[13px] font-semibold tracking-wide">
         <span className="text-gold"><span className="urgency-dot" /><Flame className="inline w-3.5 h-3.5 mr-1 -mt-0.5" /> Limited Seats</span>
         {" "}— Register free for Śrī Rāma Navamī 2026
         <a href="#register" onClick={scrollTo("register")} className="text-pink-light underline font-bold ml-2 hover:text-pink">Secure Your Spot →</a>
