@@ -32,6 +32,7 @@ import { AnimateIn } from "@/components/AnimateIn";
 import { CountUp } from "@/components/CountUp";
 import { MobileNav } from "@/components/MobileNav";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 /* ═══════════════════════════════════════
    COUNTDOWN HOOK
@@ -457,6 +458,27 @@ export default function Index() {
         </div>
       </div>
 
+      {/* ═══ STATS BAR ═══ */}
+      <div className="py-[40px] md:py-[55px] px-5" style={{ background: "linear-gradient(135deg, hsl(var(--navy-deep)), hsl(var(--navy)))" }}>
+        <div className="max-w-[900px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center">
+          {[
+            { end: 15, suffix: "+", label: "Years of Service" },
+            { end: 5000, suffix: "+", label: "Devotees Served" },
+            { end: 50, suffix: "+", label: "Dedicated Volunteers" },
+            { end: 100, suffix: "+", label: "Festivals Celebrated" },
+          ].map((stat, i) => (
+            <AnimateIn key={i} animation="pop-in" delay={i * 120}>
+              <div>
+                <div className="font-display text-[clamp(2rem,4vw,2.8rem)] font-bold text-gold leading-none">
+                  <CountUp end={stat.end} suffix={stat.suffix} />
+                </div>
+                <p className="text-[13px] text-white/70 mt-1.5 font-body tracking-wide">{stat.label}</p>
+              </div>
+            </AnimateIn>
+          ))}
+        </div>
+      </div>
+
       {/* ═══ ABOUT LORD RAMA (Significance) ═══ */}
       <div id="about" className="py-[50px] md:py-[70px] px-5" style={{ background: "linear-gradient(180deg, hsl(var(--cream-warm)), hsl(var(--cream)))" }}>
         <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[30px] md:gap-[50px] items-center">
@@ -642,6 +664,30 @@ export default function Index() {
         </AnimateIn>
       </div>
 
+      {/* ═══ FAQ ═══ */}
+      <div className="py-[50px] md:py-[70px] px-4 md:px-5 max-w-[800px] mx-auto">
+        <AnimateIn animation="fade-up">
+          <SectionHeader overline="Have Questions?" title="Frequently Asked Questions" sub="Everything you need to know before attending" />
+        </AnimateIn>
+        <AnimateIn animation="fade-up" delay={100}>
+          <Accordion type="single" collapsible className="bg-white rounded-2xl shadow-[0_2px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+            {[
+              { q: "Is there parking available at the venue?", a: "Yes, there is limited parking along Lorong 29 Geylang. We recommend using public transport — the venue is a short walk from Aljunied MRT (EW9) and Paya Lebar MRT (CC9/EW9). Several bus services also stop nearby on Sims Avenue." },
+              { q: "Is there a dress code?", a: "There is no strict dress code, but we encourage modest and respectful attire. Traditional Indian clothing is welcome but not required. Please remove shoes before entering the temple hall." },
+              { q: "Will food be provided?", a: "Yes! A sumptuous vegetarian feast (prasādam) will be served free to all attendees after the Abhiṣeka ceremony. The food is sanctified, freshly prepared, and absolutely delicious." },
+              { q: "Can I bring my children?", a: "Absolutely! The event is family-friendly and children of all ages are welcome. There will be a special children's cultural performance as part of the program. Kids particularly enjoy the drama and prasādam!" },
+              { q: "Do I need to register to attend?", a: "Registration is free and helps us plan for seating and prasādam quantities. Walk-ins are also welcome, but registered attendees get priority seating." },
+              { q: "How long is the event?", a: "The program runs from 6:00 PM to approximately 9:30 PM. You're welcome to arrive at any point and stay as long as you like — there's no obligation to attend the entire program." },
+            ].map((faq, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="border-b border-border last:border-b-0">
+                <AccordionTrigger className="px-6 text-left text-[15px] text-navy hover:no-underline">{faq.q}</AccordionTrigger>
+                <AccordionContent className="px-6 text-[14px] text-text-muted-custom leading-relaxed">{faq.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </AnimateIn>
+      </div>
+
       {/* ═══ LOCATION ═══ */}
       <div id="location" className="py-[50px] md:py-[70px] px-4 md:px-5 max-w-[1100px] mx-auto">
         <AnimateIn animation="fade-up">
@@ -750,6 +796,17 @@ export default function Index() {
       <div className="h-[70px] md:hidden" />
 
       {/* Scroll to top */}
+      {/* ═══ FLOATING WHATSAPP ═══ */}
+      <a
+        href="https://wa.me/6562502280?text=Hi%2C%20I%20have%20a%20question%20about%20Sri%20Rama%20Navami%202026"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp"
+        className="fixed bottom-[90px] md:bottom-6 right-4 md:right-6 z-[998] w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-[0_4px_20px_rgba(37,211,102,0.4)] transition-all hover:scale-110 hover:shadow-[0_6px_28px_rgba(37,211,102,0.5)]"
+      >
+        <MessageCircle size={26} fill="white" />
+      </a>
+
       <ScrollToTop />
     </div>
   );
