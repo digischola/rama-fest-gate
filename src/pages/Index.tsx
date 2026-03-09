@@ -664,6 +664,30 @@ export default function Index() {
         </AnimateIn>
       </div>
 
+      {/* ═══ FAQ ═══ */}
+      <div className="py-[50px] md:py-[70px] px-4 md:px-5 max-w-[800px] mx-auto">
+        <AnimateIn animation="fade-up">
+          <SectionHeader overline="Have Questions?" title="Frequently Asked Questions" sub="Everything you need to know before attending" />
+        </AnimateIn>
+        <AnimateIn animation="fade-up" delay={100}>
+          <Accordion type="single" collapsible className="bg-white rounded-2xl shadow-[0_2px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+            {[
+              { q: "Is there parking available at the venue?", a: "Yes, there is limited parking along Lorong 29 Geylang. We recommend using public transport — the venue is a short walk from Aljunied MRT (EW9) and Paya Lebar MRT (CC9/EW9). Several bus services also stop nearby on Sims Avenue." },
+              { q: "Is there a dress code?", a: "There is no strict dress code, but we encourage modest and respectful attire. Traditional Indian clothing is welcome but not required. Please remove shoes before entering the temple hall." },
+              { q: "Will food be provided?", a: "Yes! A sumptuous vegetarian feast (prasādam) will be served free to all attendees after the Abhiṣeka ceremony. The food is sanctified, freshly prepared, and absolutely delicious." },
+              { q: "Can I bring my children?", a: "Absolutely! The event is family-friendly and children of all ages are welcome. There will be a special children's cultural performance as part of the program. Kids particularly enjoy the drama and prasādam!" },
+              { q: "Do I need to register to attend?", a: "Registration is free and helps us plan for seating and prasādam quantities. Walk-ins are also welcome, but registered attendees get priority seating." },
+              { q: "How long is the event?", a: "The program runs from 6:00 PM to approximately 9:30 PM. You're welcome to arrive at any point and stay as long as you like — there's no obligation to attend the entire program." },
+            ].map((faq, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="border-b border-border last:border-b-0">
+                <AccordionTrigger className="px-6 text-left text-[15px] text-navy hover:no-underline">{faq.q}</AccordionTrigger>
+                <AccordionContent className="px-6 text-[14px] text-text-muted-custom leading-relaxed">{faq.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </AnimateIn>
+      </div>
+
       {/* ═══ LOCATION ═══ */}
       <div id="location" className="py-[50px] md:py-[70px] px-4 md:px-5 max-w-[1100px] mx-auto">
         <AnimateIn animation="fade-up">
