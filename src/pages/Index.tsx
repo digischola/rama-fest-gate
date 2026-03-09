@@ -154,6 +154,7 @@ export default function Index() {
   const [readMore, setReadMore] = useState(false);
   const [copyText, setCopyText] = useState("Copy Link");
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [ribbonH, setRibbonH] = useState(37);
 
   // Form state
   const [name, setName] = useState("");
@@ -180,13 +181,22 @@ export default function Index() {
   }, [emblaApi]);
 
   useEffect(() => {
+    const measure = () => {
+      const el = document.getElementById("top-ribbon");
+      if (el) setRibbonH(el.offsetHeight);
+    };
+    measure();
+    window.addEventListener("resize", measure);
     const onScroll = () => {
       setNavScrolled(window.scrollY > 10);
       const docH = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(docH > 0 ? (window.scrollY / docH) * 100 : 0);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", measure);
+    };
   }, []);
 
   const handleRegister = useCallback(
@@ -263,14 +273,14 @@ export default function Index() {
       <a href="#main-content" className="skip-link">Skip to content</a>
 
       {/* ═══ RIBBON ═══ */}
-      <div className="fixed top-0 left-0 right-0 z-[1001] bg-gradient-to-br from-navy-deep to-navy text-white text-center py-2.5 px-5 text-[13px] font-semibold tracking-wide">
+      <div id="top-ribbon" className="fixed top-0 left-0 right-0 z-[1001] bg-gradient-to-br from-navy-deep to-navy text-white text-center py-2.5 px-5 text-[13px] font-semibold tracking-wide">
         <span className="text-gold"><span className="urgency-dot" /><Flame className="inline w-3.5 h-3.5 mr-1 -mt-0.5" /> Limited Seats</span>
         {" "}— Register free for Śrī Rāma Navamī 2026
         <a href="#register" onClick={scrollTo("register")} className="text-pink-light underline font-bold ml-2 hover:text-pink">Secure Your Spot →</a>
       </div>
 
       {/* ═══ NAV ═══ */}
-      <nav className={`fixed top-[37px] left-0 right-0 z-[1000] h-14 flex items-center justify-between px-4 md:px-[30px] border-b border-navy/[0.06] transition-shadow duration-300 backdrop-blur-[16px] ${navScrolled ? "shadow-[0_2px_20px_rgba(30,58,110,0.08)]" : ""}`} style={{ background: "hsla(30, 75%, 96%, 0.92)" }}>
+      <nav className={`fixed left-0 right-0 z-[1000] h-14 flex items-center justify-between px-4 md:px-[30px] border-b border-navy/[0.06] transition-shadow duration-300 backdrop-blur-[16px] ${navScrolled ? "shadow-[0_2px_20px_rgba(30,58,110,0.08)]" : ""}`} style={{ top: `${ribbonH}px`, background: "hsla(30, 75%, 96%, 0.92)" }}>
         <a href="#" className="flex items-center gap-2.5 font-display text-lg font-bold text-navy no-underline">
           <img src={imgLogo} alt="ISKM" className="h-8 rounded-full" />
           <span className="hidden sm:inline">ISKM Singapore</span>
@@ -286,12 +296,12 @@ export default function Index() {
       </nav>
 
       {/* Scroll progress bar */}
-      <div className="fixed top-[37px] left-0 right-0 z-[1001] h-[3px]">
+      <div className="fixed left-0 right-0 z-[1001] h-[3px]" style={{ top: `${ribbonH}px` }}>
         <div className="scroll-progress h-full" style={{ transform: `scaleX(${scrollProgress / 100})` }} />
       </div>
 
       {/* ═══ HERO ═══ */}
-      <section id="main-content" className="mt-[93px] relative overflow-hidden" style={{ background: "linear-gradient(160deg, hsl(var(--navy-deep)) 0%, hsl(var(--navy)) 40%, hsl(var(--navy-2)) 100%)" }}>
+      <section id="main-content" className="relative overflow-hidden" style={{ marginTop: `${ribbonH + 56}px`, background: "linear-gradient(160deg, hsl(var(--navy-deep)) 0%, hsl(var(--navy)) 40%, hsl(var(--navy-2)) 100%)" }}>
         {/* Decorative SVG pattern */}
         <div className="absolute inset-0 pointer-events-none" style={{
           background: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cdefs%3E%3CradialGradient id='g1' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23f4c96b' stop-opacity='0.06'/%3E%3Cstop offset='100%25' stop-color='%23f4c96b' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='400' cy='400' r='350' fill='url(%23g1)'/%3E%3Cg fill='none' stroke='%23f4c96b' stroke-width='0.4' opacity='0.1'%3E%3Ccircle cx='400' cy='400' r='150'/%3E%3Ccircle cx='400' cy='400' r='220'/%3E%3Ccircle cx='400' cy='400' r='290'/%3E%3C/g%3E%3C/svg%3E") center/80% no-repeat`
@@ -299,7 +309,13 @@ export default function Index() {
 
         {/* Hero top: text + painting */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] max-w-[1200px] mx-auto px-5 md:px-[30px] lg:px-[50px] pt-[30px] md:pt-[40px] lg:pt-[50px] relative z-[2] items-center text-center lg:text-left">
-          <div className="text-white flex flex-col items-center lg:items-start lg:pr-10">
+          {/* Painting - shown first on mobile, moves to right on desktop */}
+          <div className="relative w-[200px] sm:w-[240px] md:w-[280px] lg:w-[340px] flex-shrink-0 mx-auto lg:mx-0 mb-6 lg:mb-0 order-first lg:order-last lg:col-start-2 lg:row-start-1">
+            <div className="absolute -inset-[6px] border-2 border-gold/20 rounded-[20px] pointer-events-none" />
+            <div className="absolute -inset-[12px] border border-gold/[0.08] rounded-[24px] pointer-events-none" />
+            <img src={img13} alt="Traditional painting of Lord Śrī Rāma" className="w-full rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_0_1px_rgba(244,201,107,0.15)] block" loading="eager" />
+          </div>
+          <div className="text-white flex flex-col items-center lg:items-start lg:pr-10 lg:col-start-1 lg:row-start-1">
             <div className="inline-flex items-center gap-2 text-[10px] sm:text-[12px] font-semibold tracking-[2.5px] uppercase text-gold mb-[18px]">
               <span className="w-[30px] h-[1.5px] bg-gold hidden sm:block" />
               ISKM Singapore Presents
@@ -350,12 +366,6 @@ export default function Index() {
             </p>
           </div>
 
-          {/* Painting */}
-          <div className="relative w-[200px] sm:w-[240px] md:w-[280px] lg:w-[340px] flex-shrink-0 mx-auto lg:mx-0 mt-[30px] lg:mt-0">
-            <div className="absolute -inset-[6px] border-2 border-gold/20 rounded-[20px] pointer-events-none" />
-            <div className="absolute -inset-[12px] border border-gold/[0.08] rounded-[24px] pointer-events-none" />
-            <img src={img13} alt="Traditional painting of Lord Śrī Rāma" className="w-full rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_0_1px_rgba(244,201,107,0.15)] block" loading="eager" />
-          </div>
         </div>
 
         <div className="pb-[35px] md:pb-[40px] lg:pb-[50px]" />
