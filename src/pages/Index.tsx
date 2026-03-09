@@ -229,8 +229,6 @@ export default function Index() {
   ];
 
   const galleryImgs = [
-    { src: img1, alt: "Deities with white flower garlands" },
-    { src: img2, alt: "Decorated altar with colorful flowers" },
     { src: img7, alt: "Close-up of deities with fruit garlands" },
     { src: img4, alt: "Sacred Shaligrama puja" },
     { src: img3, alt: "Full altar view with decorations" },
