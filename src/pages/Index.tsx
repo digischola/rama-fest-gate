@@ -154,6 +154,7 @@ export default function Index() {
   const [readMore, setReadMore] = useState(false);
   const [copyText, setCopyText] = useState("Copy Link");
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [ribbonH, setRibbonH] = useState(37);
 
   // Form state
   const [name, setName] = useState("");
