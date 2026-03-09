@@ -299,7 +299,13 @@ export default function Index() {
 
         {/* Hero top: text + painting */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] max-w-[1200px] mx-auto px-5 md:px-[30px] lg:px-[50px] pt-[30px] md:pt-[40px] lg:pt-[50px] relative z-[2] items-center text-center lg:text-left">
-          <div className="text-white flex flex-col items-center lg:items-start lg:pr-10">
+          {/* Painting - shown first on mobile, moves to right on desktop */}
+          <div className="relative w-[200px] sm:w-[240px] md:w-[280px] lg:w-[340px] flex-shrink-0 mx-auto lg:mx-0 mb-6 lg:mb-0 order-first lg:order-last lg:col-start-2 lg:row-start-1">
+            <div className="absolute -inset-[6px] border-2 border-gold/20 rounded-[20px] pointer-events-none" />
+            <div className="absolute -inset-[12px] border border-gold/[0.08] rounded-[24px] pointer-events-none" />
+            <img src={img13} alt="Traditional painting of Lord Śrī Rāma" className="w-full rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_0_1px_rgba(244,201,107,0.15)] block" loading="eager" />
+          </div>
+          <div className="text-white flex flex-col items-center lg:items-start lg:pr-10 lg:col-start-1 lg:row-start-1">
             <div className="inline-flex items-center gap-2 text-[10px] sm:text-[12px] font-semibold tracking-[2.5px] uppercase text-gold mb-[18px]">
               <span className="w-[30px] h-[1.5px] bg-gold hidden sm:block" />
               ISKM Singapore Presents
