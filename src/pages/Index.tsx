@@ -280,7 +280,7 @@ export default function Index() {
       </div>
 
       {/* ═══ NAV ═══ */}
-      <nav className={`fixed top-[37px] left-0 right-0 z-[1000] h-14 flex items-center justify-between px-4 md:px-[30px] border-b border-navy/[0.06] transition-shadow duration-300 backdrop-blur-[16px] ${navScrolled ? "shadow-[0_2px_20px_rgba(30,58,110,0.08)]" : ""}`} style={{ background: "hsla(30, 75%, 96%, 0.92)" }}>
+      <nav className={`fixed left-0 right-0 z-[1000] h-14 flex items-center justify-between px-4 md:px-[30px] border-b border-navy/[0.06] transition-shadow duration-300 backdrop-blur-[16px] ${navScrolled ? "shadow-[0_2px_20px_rgba(30,58,110,0.08)]" : ""}`} style={{ top: `${ribbonH}px`, background: "hsla(30, 75%, 96%, 0.92)" }}>
         <a href="#" className="flex items-center gap-2.5 font-display text-lg font-bold text-navy no-underline">
           <img src={imgLogo} alt="ISKM" className="h-8 rounded-full" />
           <span className="hidden sm:inline">ISKM Singapore</span>
