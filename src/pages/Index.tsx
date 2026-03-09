@@ -301,7 +301,7 @@ export default function Index() {
       </div>
 
       {/* ═══ HERO ═══ */}
-      <section id="main-content" className="mt-[93px] relative overflow-hidden" style={{ background: "linear-gradient(160deg, hsl(var(--navy-deep)) 0%, hsl(var(--navy)) 40%, hsl(var(--navy-2)) 100%)" }}>
+      <section id="main-content" className="relative overflow-hidden" style={{ marginTop: `${ribbonH + 56}px`, background: "linear-gradient(160deg, hsl(var(--navy-deep)) 0%, hsl(var(--navy)) 40%, hsl(var(--navy-2)) 100%)" }}>
         {/* Decorative SVG pattern */}
         <div className="absolute inset-0 pointer-events-none" style={{
           background: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cdefs%3E%3CradialGradient id='g1' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23f4c96b' stop-opacity='0.06'/%3E%3Cstop offset='100%25' stop-color='%23f4c96b' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='400' cy='400' r='350' fill='url(%23g1)'/%3E%3Cg fill='none' stroke='%23f4c96b' stroke-width='0.4' opacity='0.1'%3E%3Ccircle cx='400' cy='400' r='150'/%3E%3Ccircle cx='400' cy='400' r='220'/%3E%3Ccircle cx='400' cy='400' r='290'/%3E%3C/g%3E%3C/svg%3E") center/80% no-repeat`
