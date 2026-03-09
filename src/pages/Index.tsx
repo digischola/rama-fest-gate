@@ -296,7 +296,7 @@ export default function Index() {
       </nav>
 
       {/* Scroll progress bar */}
-      <div className="fixed top-[37px] left-0 right-0 z-[1001] h-[3px]">
+      <div className="fixed left-0 right-0 z-[1001] h-[3px]" style={{ top: `${ribbonH}px` }}>
         <div className="scroll-progress h-full" style={{ transform: `scaleX(${scrollProgress / 100})` }} />
       </div>
 
