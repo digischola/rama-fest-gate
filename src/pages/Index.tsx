@@ -825,7 +825,7 @@ export default function Index() {
         <MessageCircle size={26} fill="white" />
       </a>
 
-      <ScrollToTop />
+      
     </div>
   );
 }
