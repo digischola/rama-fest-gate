@@ -32,6 +32,7 @@ import img14 from "@/assets/14.jpg";
 import img15 from "@/assets/15.jpg";
 import img16 from "@/assets/16.jpg";
 import img17 from "@/assets/17.jpg";
+import img18 from "@/assets/18.jpg";
 
 import { AnimateIn } from "@/components/AnimateIn";
 import { CountUp } from "@/components/CountUp";
@@ -231,7 +232,7 @@ export default function Index() {
   const galleryImgs = [
     { src: img7, alt: "Close-up of deities with fruit garlands" },
     { src: img4, alt: "Sacred Shaligrama puja" },
-    { src: img3, alt: "Full altar view with decorations" },
+    { src: img18, alt: "Children singing devotional songs" },
     { src: img9, alt: "Ramayana drama on stage" },
     { src: img12, alt: "Devotees enjoying prasadam feast" },
     { src: img14, alt: "Dramatic performance by devotee" },
