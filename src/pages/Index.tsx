@@ -458,6 +458,27 @@ export default function Index() {
         </div>
       </div>
 
+      {/* ═══ STATS BAR ═══ */}
+      <div className="py-[40px] md:py-[55px] px-5" style={{ background: "linear-gradient(135deg, hsl(var(--navy-deep)), hsl(var(--navy)))" }}>
+        <div className="max-w-[900px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center">
+          {[
+            { end: 15, suffix: "+", label: "Years of Service" },
+            { end: 5000, suffix: "+", label: "Devotees Served" },
+            { end: 50, suffix: "+", label: "Dedicated Volunteers" },
+            { end: 100, suffix: "+", label: "Festivals Celebrated" },
+          ].map((stat, i) => (
+            <AnimateIn key={i} animation="pop-in" delay={i * 120}>
+              <div>
+                <div className="font-display text-[clamp(2rem,4vw,2.8rem)] font-bold text-gold leading-none">
+                  <CountUp end={stat.end} suffix={stat.suffix} />
+                </div>
+                <p className="text-[13px] text-white/70 mt-1.5 font-body tracking-wide">{stat.label}</p>
+              </div>
+            </AnimateIn>
+          ))}
+        </div>
+      </div>
+
       {/* ═══ ABOUT LORD RAMA (Significance) ═══ */}
       <div id="about" className="py-[50px] md:py-[70px] px-5" style={{ background: "linear-gradient(180deg, hsl(var(--cream-warm)), hsl(var(--cream)))" }}>
         <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[30px] md:gap-[50px] items-center">
