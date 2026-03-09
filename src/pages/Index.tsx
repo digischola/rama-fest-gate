@@ -356,12 +356,6 @@ export default function Index() {
             </p>
           </div>
 
-          {/* Painting */}
-          <div className="relative w-[200px] sm:w-[240px] md:w-[280px] lg:w-[340px] flex-shrink-0 mx-auto lg:mx-0 mt-[30px] lg:mt-0">
-            <div className="absolute -inset-[6px] border-2 border-gold/20 rounded-[20px] pointer-events-none" />
-            <div className="absolute -inset-[12px] border border-gold/[0.08] rounded-[24px] pointer-events-none" />
-            <img src={img13} alt="Traditional painting of Lord Śrī Rāma" className="w-full rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_0_1px_rgba(244,201,107,0.15)] block" loading="eager" />
-          </div>
         </div>
 
         <div className="pb-[35px] md:pb-[40px] lg:pb-[50px]" />
