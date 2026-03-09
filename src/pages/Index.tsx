@@ -32,6 +32,7 @@ import img14 from "@/assets/14.jpg";
 import img15 from "@/assets/15.jpg";
 import img16 from "@/assets/16.jpg";
 import img17 from "@/assets/17.jpg";
+import img18 from "@/assets/18.jpg";
 
 import { AnimateIn } from "@/components/AnimateIn";
 import { CountUp } from "@/components/CountUp";
