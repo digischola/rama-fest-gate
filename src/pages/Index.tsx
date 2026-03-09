@@ -235,6 +235,10 @@ export default function Index() {
     { src: img4, alt: "Sacred Shaligrama puja" },
     { src: img3, alt: "Full altar view with decorations" },
     { src: img9, alt: "Ramayana drama on stage" },
+    { src: img12, alt: "Devotees enjoying prasadam feast" },
+    { src: img14, alt: "Dramatic performance by devotee" },
+    { src: img16, alt: "Mother and child at the temple" },
+    { src: img17, alt: "Joyful dancing during kirtan" },
   ];
 
   const timeline = [
