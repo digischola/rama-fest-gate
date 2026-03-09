@@ -181,13 +181,22 @@ export default function Index() {
   }, [emblaApi]);
 
   useEffect(() => {
+    const measure = () => {
+      const el = document.getElementById("top-ribbon");
+      if (el) setRibbonH(el.offsetHeight);
+    };
+    measure();
+    window.addEventListener("resize", measure);
     const onScroll = () => {
       setNavScrolled(window.scrollY > 10);
       const docH = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(docH > 0 ? (window.scrollY / docH) * 100 : 0);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", measure);
+    };
   }, []);
 
   const handleRegister = useCallback(
