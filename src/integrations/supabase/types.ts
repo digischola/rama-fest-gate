@@ -14,13 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      registrations: {
+        Row: {
+          age: number | null
+          attendees: number
+          created_at: string
+          email: string
+          full_name: string
+          gender: string | null
+          id: string
+          phone: string | null
+          remarks: string | null
+          volunteer: boolean
+          volunteering_categories: string[] | null
+        }
+        Insert: {
+          age?: number | null
+          attendees?: number
+          created_at?: string
+          email: string
+          full_name: string
+          gender?: string | null
+          id?: string
+          phone?: string | null
+          remarks?: string | null
+          volunteer?: boolean
+          volunteering_categories?: string[] | null
+        }
+        Update: {
+          age?: number | null
+          attendees?: number
+          created_at?: string
+          email?: string
+          full_name?: string
+          gender?: string | null
+          id?: string
+          phone?: string | null
+          remarks?: string | null
+          volunteer?: boolean
+          volunteering_categories?: string[] | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_registration_count: { Args: never; Returns: number }
     }
     Enums: {
       [_ in never]: never
