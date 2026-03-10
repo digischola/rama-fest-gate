@@ -236,26 +236,67 @@ export default function Index() {
 
   const totalSteps = volunteer === "yes" ? 2 : 1;
 
+  const buildWhatsAppUrl = (isVolunteer: boolean, catsList?: string[]) => {
+    const phone = "6562502280";
+    const numAtt = attendees === "5" ? "5+" : attendees;
+    if (isVolunteer && catsList && catsList.length > 0) {
+      const cats = catsList.join(", ");
+      const msg = `Hare Kṛṣṇa! 🙏\n\nI've registered as a *volunteer* for Śrī Rāma Navamī 2026.\n\n*Name:* ${name}\n*Attendees:* ${numAtt}\n*Volunteer Categories:* ${cats}\n\nI'm excited to serve! Please coordinate with me before the event.\n\nJai Śrī Rāma! 🏹`;
+      return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    }
+    const msg = `Hare Kṛṣṇa! 🙏\n\nI've registered for Śrī Rāma Navamī 2026.\n\n*Name:* ${name}\n*Attendees:* ${numAtt}\n\n📅 Friday, 27th March 2026\n🕡 6:30 PM – 10:00 PM\n📍 No.9 Lorong 29 Geylang, #03-02, Singapore 388065\n\nLooking forward to it!\nJai Śrī Rāma! 🏹`;
+    return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  };
+
+  const submitRegistration = async (isVolunteer: boolean) => {
+    setSubmitting(true);
+    try {
+      const payload: Record<string, unknown> = {
+        full_name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim() || null,
+        attendees: parseInt(attendees === "5" ? "5" : attendees),
+        volunteer: isVolunteer,
+      };
+      if (isVolunteer) {
+        payload.age = volAge ? parseInt(volAge) : null;
+        payload.gender = volGender || null;
+        payload.remarks = volRemarks.trim() || null;
+        payload.volunteering_categories = volCategories.length > 0 ? volCategories : null;
+      }
+      const { error } = await supabase.from('registrations').insert(payload);
+      if (error) throw error;
+      setRegistered(true);
+      setSpots((s) => s + parseInt(attendees === "5" ? "5" : attendees));
+      // Open WhatsApp in new tab
+      const waUrl = buildWhatsAppUrl(isVolunteer, isVolunteer ? volCategories : undefined);
+      setTimeout(() => window.open(waUrl, "_blank"), 800);
+    } catch (err) {
+      console.error("Registration error:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const handlePage1Next = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
       if (volunteer === "yes") {
         setFormStep(2);
       } else {
-        setRegistered(true);
-        setSpots((s) => s + 1);
+        submitRegistration(false);
       }
     },
-    [volunteer]
+    [volunteer, name, email, phone, attendees]
   );
 
   const handlePage2Submit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      setRegistered(true);
-      setSpots((s) => s + 1);
+      submitRegistration(true);
     },
-    []
+    [name, email, phone, attendees, volAge, volGender, volRemarks, volCategories]
   );
 
   const toggleVolCategory = (cat: string) => {
