@@ -530,8 +530,8 @@ export default function Index() {
                           <option value="yes">Yes, I'd love to help!</option>
                         </select>
                       </div>
-                      <button type="submit" className="w-full py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide mt-1 hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow">
-                        {volunteer === "yes" ? "Next — Volunteer Details" : "Register Now — It's Free"}
+                      <button type="submit" disabled={submitting} className="w-full py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide mt-1 hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow disabled:opacity-60 disabled:cursor-not-allowed">
+                        {submitting ? "Registering…" : volunteer === "yes" ? "Next — Volunteer Details" : "Register Now — It's Free"}
                       </button>
                       <div className="flex items-center justify-center gap-1.5 mt-2 text-[11px] text-text-muted-custom">
                         <ShieldCheck className="w-3 h-3 text-green" />
