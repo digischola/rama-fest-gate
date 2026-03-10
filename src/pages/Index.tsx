@@ -575,7 +575,7 @@ export default function Index() {
         <div className="max-w-[900px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center">
           {[
             { end: 45, suffix: "+", label: "Years of Service" },
-            { end: 15000, suffix: "+", label: "Expected Attendees" },
+            { end: 1000, suffix: "+", label: "Expected Attendees" },
             { end: 50, suffix: "+", label: "Dedicated Volunteers" },
             { end: 100, suffix: "+", label: "Festivals Celebrated" },
           ].map((stat, i) => (
