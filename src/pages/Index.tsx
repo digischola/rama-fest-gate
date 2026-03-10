@@ -202,6 +202,19 @@ export default function Index() {
     return () => { emblaApi.off("select", onSelect); };
   }, [emblaApi]);
 
+  // Fetch live registration count
+  useEffect(() => {
+    const fetchCount = async () => {
+      const { data, error } = await supabase.rpc('get_registration_count');
+      if (!error && data !== null) {
+        setSpots(Math.max(data, 120));
+      }
+    };
+    fetchCount();
+    const interval = setInterval(fetchCount, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const measure = () => {
       const el = document.getElementById("top-ribbon");
