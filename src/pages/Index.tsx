@@ -596,7 +596,7 @@ export default function Index() {
                     <Check className="w-7 h-7 text-green" />
                   </div>
                   <h3 className="text-[22px] text-navy mb-2 relative z-[1]">You're Registered!</h3>
-                  <p className="text-sm text-text-muted-custom leading-relaxed relative z-[1]">We've saved your spot for Śrī Rāma Navamī 2026. A confirmation email will be sent shortly.</p>
+                  <p className="text-sm text-text-muted-custom leading-relaxed relative z-[1]">We've saved your spot for Śrī Rāma Navamī 2026. A WhatsApp message is being opened so you can confirm directly with the temple.</p>
                 </div>
               )}
             </div>
