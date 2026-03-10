@@ -5,7 +5,8 @@ import {
   Calendar, Clock, MapPin, Flame, Users, UtensilsCrossed, Baby,
   Ticket, ShieldCheck, Check, Info, Droplets, Soup, Sprout, Fan, Heart,
   HandHelping, Phone, Train, Bus, Navigation, MessageCircle, Send,
-  CalendarPlus, Link as LinkIcon, ArrowUp, ChevronLeft, ChevronRight
+  CalendarPlus, Link as LinkIcon, ArrowUp, ChevronLeft, ChevronRight,
+  ArrowLeft
 } from "lucide-react";
 
 import img1 from "@/assets/1.jpg";
@@ -33,17 +34,17 @@ import img15 from "@/assets/15.jpg";
 import img16 from "@/assets/16.jpg";
 import img17 from "@/assets/17.jpg";
 import img18 from "@/assets/18.jpg";
+import heroRama from "@/assets/hero-rama.jpg";
 
 import { AnimateIn } from "@/components/AnimateIn";
 import { CountUp } from "@/components/CountUp";
 import { MobileNav } from "@/components/MobileNav";
-import { ScrollToTop } from "@/components/ScrollToTop";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 /* ═══════════════════════════════════════
    COUNTDOWN HOOK
    ═══════════════════════════════════════ */
-const TARGET = new Date("2026-03-26T18:00:00+08:00").getTime();
+const TARGET = new Date("2026-03-27T18:00:00+08:00").getTime();
 
 function useCountdown() {
   const calc = () => {
@@ -75,7 +76,7 @@ function useCountdown() {
    HELPERS
    ═══════════════════════════════════════ */
 function downloadICS() {
-  const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20260326T100000Z\nDTEND:20260326T133000Z\nSUMMARY:Śrī Rāma Navamī 2026 at ISKM Singapore\nDESCRIPTION:Grand celebration with Abhisheka, Kirtana, Ramayana Drama & free Prasadam.\nLOCATION:No.9 Lorong 29 Geylang #03-02 Singapore 388065\nURL:https://srikrishnamandir.org/festival/sri-rama-navami-2026/\nEND:VEVENT\nEND:VCALENDAR`;
+  const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20260327T103000Z\nDTEND:20260327T140000Z\nSUMMARY:Śrī Rāma Navamī 2026 at ISKM Singapore\nDESCRIPTION:Grand celebration with Abhisheka, Kirtana, Ramayana Drama & free Prasadam.\nLOCATION:No.9 Lorong 29 Geylang #03-02 Singapore 388065\nURL:https://srikrishnamandir.org/festival/sri-rama-navami-2026/\nEND:VEVENT\nEND:VCALENDAR`;
   const blob = new Blob([ics], { type: "text/calendar" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
@@ -143,6 +144,18 @@ function BlurImage({ src, alt, className, ...props }: React.ImgHTMLAttributes<HT
   );
 }
 
+/* Volunteer categories */
+const VOLUNTEER_CATEGORIES = [
+  "Cutting vegetables",
+  "Washing dishes",
+  "Sweeping & mopping the kitchen area",
+  "Decorating temple hall",
+  "Setting up crew",
+  "Packing up crew",
+  "Temple cleaning",
+  "Photography and Videography",
+];
+
 /* ═══════════════════════════════════════
    MAIN PAGE
    ═══════════════════════════════════════ */
@@ -156,12 +169,19 @@ export default function Index() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [ribbonH, setRibbonH] = useState(37);
 
-  // Form state
+  // Form state — Page 1
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [attendees, setAttendees] = useState("2");
   const [volunteer, setVolunteer] = useState("no");
+
+  // Form state — Page 2 (volunteer fields)
+  const [formStep, setFormStep] = useState(1);
+  const [volAge, setVolAge] = useState("");
+  const [volGender, setVolGender] = useState("");
+  const [volRemarks, setVolRemarks] = useState("");
+  const [volCategories, setVolCategories] = useState<string[]>([]);
 
   // Gallery carousel
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }));
@@ -199,7 +219,22 @@ export default function Index() {
     };
   }, []);
 
-  const handleRegister = useCallback(
+  const totalSteps = volunteer === "yes" ? 2 : 1;
+
+  const handlePage1Next = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (volunteer === "yes") {
+        setFormStep(2);
+      } else {
+        setRegistered(true);
+        setSpots((s) => s + 1);
+      }
+    },
+    [volunteer]
+  );
+
+  const handlePage2Submit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
       setRegistered(true);
@@ -207,6 +242,12 @@ export default function Index() {
     },
     []
   );
+
+  const toggleVolCategory = (cat: string) => {
+    setVolCategories((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    );
+  };
 
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -227,13 +268,12 @@ export default function Index() {
   const isNameValid = name.trim().length >= 2;
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const filledFields = [isNameValid, isEmailValid].filter(Boolean).length;
-  const formProgress = Math.round(((filledFields + 1) / 3) * 100); // +1 for attendees which has default
 
   /* ─── data ─── */
   const expectCards = [
     { img: img5, title: "Sacred Abhiṣeka", desc: "Witness the grand bathing ceremony of the deities with milk, ghee, yogurt, and sanctified waters." },
     { img: img6, title: "Divine Kīrtana", desc: "Join heart-stirring congregational chanting that fills the temple with spiritual vibrations." },
-    { img: img9, title: "Rāmāyaṇa Drama", desc: "Watch a captivating theatrical performance depicting the glories of Lord Rāma's pastimes." },
+    { img: img9, title: "Rāmāyaṇa — A Sacred Theatrical", desc: "A spectacular theatrical portrayal of Lord Rāma's divine pastimes by the Vaikuṇṭa Players." },
     { img: imgPrasadam, title: "Blessed Prasādam", desc: "Relish sanctified vegetarian food offered to the Lord — served free to all attendees." },
     { img: img3, title: "Spiritual Discourse", desc: "Hear inspiring insights on the significance of Rāma Navamī and the teachings of the Rāmāyaṇa." },
     { img: img8, title: "Community & Family", desc: "Bring the whole family for children's performances, book stalls, and a warm atmosphere." },
@@ -251,12 +291,12 @@ export default function Index() {
   ];
 
   const timeline = [
-    { time: "6:00 – 6:30 PM", title: "Ārati & Opening Kīrtana", desc: "Evening worship ceremony with congregational chanting to set the devotional atmosphere", highlight: false },
-    { time: "6:30 – 7:30 PM", title: "Grand Abhiṣeka & Kīrtana", tag: "Highlight", desc: "The sacred bathing ceremony of the deities — the centrepiece of the evening celebration", highlight: true },
-    { time: "7:30 – 7:45 PM", title: "Rāma Navamī Address", desc: "Spiritual insights on Lord Rāma's appearance and teachings by the Temple President", highlight: false },
-    { time: "7:45 PM", title: "Prasādam is Served", tag: "Free Feast", desc: "Sanctified vegetarian feast for all attendees — come hungry, leave blessed", highlight: true },
-    { time: "8:00 – 8:30 PM", title: "Children's Cultural Performance", desc: "Presentations and recitations by young devotees celebrating Rāma's glories", highlight: false },
-    { time: "8:30 – 9:30 PM", title: "Rāmāyaṇa Drama", tag: "Grand Finale", desc: "A spectacular theatrical performance by the Vaikunta Players", highlight: true },
+    { time: "6:30 – 7:00 PM", title: "Ārati & Opening Kīrtana", desc: "Evening worship ceremony with congregational chanting to set the devotional atmosphere", highlight: false },
+    { time: "7:00 – 8:00 PM", title: "Grand Abhiṣeka & Kīrtana", tag: "Highlight", desc: "The sacred bathing ceremony of the deities — the centrepiece of the evening celebration", highlight: true },
+    { time: "8:00 – 8:15 PM", title: "Rāma Navamī Address", desc: "Spiritual insights on Lord Rāma's appearance and teachings by the Temple President", highlight: false },
+    { time: "8:15 PM", title: "Prasādam is Served", tag: "Free Feast", desc: "Sanctified vegetarian feast for all attendees — come hungry, leave blessed", highlight: true },
+    { time: "8:30 – 9:00 PM", title: "Children's Cultural Performance", desc: "Presentations and recitations by young devotees celebrating Rāma's glories", highlight: false },
+    { time: "9:00 – 10:00 PM", title: "Rāmāyaṇa — A Sacred Theatrical", tag: "Grand Finale", desc: "A spectacular theatrical portrayal of Lord Rāma's divine pastimes by the Vaikuṇṭa Players.", highlight: true },
   ];
 
   const sevaCards = [
@@ -266,6 +306,8 @@ export default function Index() {
     { icon: <Fan size={18} />, title: "Puṣpa-Alaṅkāra", desc: "Contribute to exquisite flower garland decorations for the deities", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-pu%E1%B9%A3pa-ala%E1%B9%85kara-seva/", img: imgAlankara },
     { icon: <Heart size={18} />, title: "General Donation", desc: "Support the festival in any way that feels right for you", link: "https://srikrishnamandir.org/product/sri-gaura-pur%E1%B9%87ima-outright-contribution/", img: imgCharity },
   ];
+
+  const inputCls = "w-full py-3 md:py-2.5 px-3.5 border-[1.5px] border-[#e5ded5] rounded-lg font-body text-sm text-text-dark bg-cream outline-none transition-all focus:border-navy focus:shadow-[0_0_0_3px_rgba(30,58,110,0.08)] placeholder:text-[#b5aea5]";
 
   return (
     <div className="min-h-screen">
@@ -313,7 +355,7 @@ export default function Index() {
           <div className="relative w-[200px] sm:w-[240px] md:w-[280px] lg:w-[340px] flex-shrink-0 mx-auto lg:mx-0 mb-6 lg:mb-0 order-first lg:order-last lg:col-start-2 lg:row-start-1">
             <div className="absolute -inset-[6px] border-2 border-gold/20 rounded-[20px] pointer-events-none" />
             <div className="absolute -inset-[12px] border border-gold/[0.08] rounded-[24px] pointer-events-none" />
-            <img src={img13} alt="Traditional painting of Lord Śrī Rāma" className="w-full rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_0_1px_rgba(244,201,107,0.15)] block" loading="eager" />
+            <img src={heroRama} alt="Traditional painting of Lord Śrī Rāma" className="w-full rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_0_1px_rgba(244,201,107,0.15)] block" loading="eager" />
           </div>
           <div className="text-white flex flex-col items-center lg:items-start lg:pr-10 lg:col-start-1 lg:row-start-1">
             <div className="inline-flex items-center gap-2 text-[10px] sm:text-[12px] font-semibold tracking-[2.5px] uppercase text-gold mb-[18px]">
@@ -328,8 +370,8 @@ export default function Index() {
             </p>
             <div className="flex flex-col gap-2 mb-6 items-center lg:items-start">
               {[
-                { icon: <Calendar size={12} />, text: "Thursday, 26th March 2026" },
-                { icon: <Clock size={12} />, text: "6:00 PM – 9:30 PM" },
+                { icon: <Calendar size={12} />, text: "Friday, 27th March 2026" },
+                { icon: <Clock size={12} />, text: "6:30 PM – 10:00 PM" },
                 { icon: <MapPin size={12} />, text: "No.9 Lorong 29 Geylang, #03-02" },
               ].map((m, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-white">
@@ -382,62 +424,114 @@ export default function Index() {
                     <span className="inline-block bg-gold/[0.12] text-navy text-xs font-bold py-1 px-3.5 rounded-[20px] mb-2 border border-gold/30">
                       <Ticket className="inline w-3 h-3 mr-1 -mt-0.5" /> Free Entry
                     </span>
-                    <h3 className="text-xl text-navy mb-1">Reserve Your Seat</h3>
+                    <h3 className="text-xl text-navy mb-1">Confirm Your Attendance</h3>
                     <p className="text-[13px] text-text-muted-custom">Fill in below to register for the celebration</p>
+                    {/* Step indicator */}
                     <div className="flex items-center justify-center gap-1.5 mt-2">
-                      {[1, 2, 3].map((step) => (
-                        <div key={step} className={`w-2 h-2 rounded-full transition-all duration-300 ${step <= filledFields + 1 ? "bg-gold scale-110" : "bg-border"}`} />
-                      ))}
-                      <span className="text-[10px] text-text-muted-custom ml-1.5">Almost there!</span>
+                      <span className={`w-2 h-2 rounded-full transition-all duration-300 ${formStep >= 1 ? "bg-gold scale-110" : "bg-border"}`} />
+                      {totalSteps === 2 && (
+                        <span className={`w-2 h-2 rounded-full transition-all duration-300 ${formStep >= 2 ? "bg-gold scale-110" : "bg-border"}`} />
+                      )}
+                      <span className="text-[10px] text-text-muted-custom ml-1.5">Step {formStep} of {totalSteps}</span>
                     </div>
                   </div>
-                  <form onSubmit={handleRegister}>
-                    <div className="mb-3 relative">
-                      <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Full Name *</label>
-                      <input type="text" placeholder="Your full name" required value={name} onChange={(e) => setName(e.target.value)}
-                        className={`w-full py-3 md:py-2.5 px-3.5 border-[1.5px] border-[#e5ded5] rounded-lg font-body text-sm text-text-dark bg-cream outline-none transition-all focus:border-navy focus:shadow-[0_0_0_3px_rgba(30,58,110,0.08)] placeholder:text-[#b5aea5] ${isNameValid ? "input-valid" : ""}`} />
-                      {isNameValid && <Check className="absolute right-3 top-[34px] w-4 h-4 text-green" />}
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-                      <div className="relative">
-                        <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Email *</label>
-                        <input type="email" placeholder="you@email.com" required value={email} onChange={(e) => setEmail(e.target.value)}
-                          className={`w-full py-3 md:py-2.5 px-3.5 border-[1.5px] border-[#e5ded5] rounded-lg font-body text-sm text-text-dark bg-cream outline-none transition-all focus:border-navy focus:shadow-[0_0_0_3px_rgba(30,58,110,0.08)] placeholder:text-[#b5aea5] ${isEmailValid ? "input-valid" : ""}`} />
-                        {isEmailValid && <Check className="absolute right-3 top-[34px] w-4 h-4 text-green" />}
+
+                  {formStep === 1 ? (
+                    <form onSubmit={handlePage1Next}>
+                      <div className="mb-3 relative">
+                        <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Full Name *</label>
+                        <input type="text" placeholder="Your full name" required value={name} onChange={(e) => setName(e.target.value)}
+                          className={`${inputCls} ${isNameValid ? "input-valid" : ""}`} />
+                        {isNameValid && <Check className="absolute right-3 top-[34px] w-4 h-4 text-green" />}
                       </div>
-                      <div>
-                        <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Phone</label>
-                        <input type="tel" placeholder="+65 XXXX XXXX" value={phone} onChange={(e) => setPhone(e.target.value)}
-                          className="w-full py-3 md:py-2.5 px-3.5 border-[1.5px] border-[#e5ded5] rounded-lg font-body text-sm text-text-dark bg-cream outline-none transition-all focus:border-navy focus:shadow-[0_0_0_3px_rgba(30,58,110,0.08)] placeholder:text-[#b5aea5]" />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                        <div className="relative">
+                          <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Email *</label>
+                          <input type="email" placeholder="you@email.com" required value={email} onChange={(e) => setEmail(e.target.value)}
+                            className={`${inputCls} ${isEmailValid ? "input-valid" : ""}`} />
+                          {isEmailValid && <Check className="absolute right-3 top-[34px] w-4 h-4 text-green" />}
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Phone</label>
+                          <input type="tel" placeholder="+65 XXXX XXXX" value={phone} onChange={(e) => setPhone(e.target.value)}
+                            className={inputCls} />
+                        </div>
                       </div>
-                    </div>
-                    <div className="mb-3">
-                      <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Number of Attendees</label>
-                      <select value={attendees} onChange={(e) => setAttendees(e.target.value)}
-                        className="w-full py-3 md:py-2.5 px-3.5 border-[1.5px] border-[#e5ded5] rounded-lg font-body text-sm text-text-dark bg-cream outline-none transition-all focus:border-navy focus:shadow-[0_0_0_3px_rgba(30,58,110,0.08)]">
-                        <option value="1">1 Person</option>
-                        <option value="2">2 People</option>
-                        <option value="3">3 People</option>
-                        <option value="4">4 People</option>
-                        <option value="5">5+ People</option>
-                      </select>
-                    </div>
-                    <div className="mb-3">
-                      <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Would you like to volunteer?</label>
-                      <select value={volunteer} onChange={(e) => setVolunteer(e.target.value)}
-                        className="w-full py-3 md:py-2.5 px-3.5 border-[1.5px] border-[#e5ded5] rounded-lg font-body text-sm text-text-dark bg-cream outline-none transition-all focus:border-navy focus:shadow-[0_0_0_3px_rgba(30,58,110,0.08)]">
-                        <option value="no">No, just attending</option>
-                        <option value="yes">Yes, I'd love to help!</option>
-                      </select>
-                    </div>
-                    <button type="submit" className="w-full py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide mt-1 hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow">
-                      Register Now — It's Free
-                    </button>
-                    <div className="flex items-center justify-center gap-1.5 mt-2 text-[11px] text-text-muted-custom">
-                      <ShieldCheck className="w-3 h-3 text-green" />
-                      <span>No payment required · We'll send a confirmation email</span>
-                    </div>
-                  </form>
+                      <div className="mb-3">
+                        <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Number of Attendees</label>
+                        <select value={attendees} onChange={(e) => setAttendees(e.target.value)} className={inputCls}>
+                          <option value="1">1 Person</option>
+                          <option value="2">2 People</option>
+                          <option value="3">3 People</option>
+                          <option value="4">4 People</option>
+                          <option value="5">5+ People</option>
+                        </select>
+                      </div>
+                      <div className="mb-3">
+                        <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Would you like to volunteer?</label>
+                        <select value={volunteer} onChange={(e) => setVolunteer(e.target.value)} className={inputCls}>
+                          <option value="no">No, just attending</option>
+                          <option value="yes">Yes, I'd love to help!</option>
+                        </select>
+                      </div>
+                      <button type="submit" className="w-full py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide mt-1 hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow">
+                        {volunteer === "yes" ? "Next — Volunteer Details" : "Register Now — It's Free"}
+                      </button>
+                      <div className="flex items-center justify-center gap-1.5 mt-2 text-[11px] text-text-muted-custom">
+                        <ShieldCheck className="w-3 h-3 text-green" />
+                        <span>No payment required · We'll send a confirmation email</span>
+                      </div>
+                    </form>
+                  ) : (
+                    <form onSubmit={handlePage2Submit}>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                        <div>
+                          <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Age *</label>
+                          <input type="number" placeholder="Your age" required min={1} max={120} value={volAge} onChange={(e) => setVolAge(e.target.value)}
+                            className={inputCls} />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Gender *</label>
+                          <select required value={volGender} onChange={(e) => setVolGender(e.target.value)} className={inputCls}>
+                            <option value="" disabled>Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="prefer-not">Prefer not to say</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="mb-3">
+                        <label className="block text-xs font-semibold text-text-dark mb-1 tracking-wide">Remarks</label>
+                        <textarea placeholder="If you are skilled in photography or videography, please let us know here" value={volRemarks} onChange={(e) => setVolRemarks(e.target.value)}
+                          className={`${inputCls} min-h-[80px] resize-y`} />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-xs font-semibold text-text-dark mb-2 tracking-wide">Volunteering Categories</label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {VOLUNTEER_CATEGORIES.map((cat) => (
+                            <label key={cat} className="flex items-start gap-2 cursor-pointer text-sm text-text-dark">
+                              <input
+                                type="checkbox"
+                                checked={volCategories.includes(cat)}
+                                onChange={() => toggleVolCategory(cat)}
+                                className="mt-0.5 accent-navy"
+                              />
+                              <span className="leading-tight">{cat}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <button type="button" onClick={() => setFormStep(1)}
+                          className="flex-1 py-3.5 bg-cream text-navy border border-[#e5ded5] rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all hover:bg-cream-warm flex items-center justify-center gap-2">
+                          <ArrowLeft size={16} /> Back
+                        </button>
+                        <button type="submit" className="flex-[2] py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow">
+                          Submit Registration
+                        </button>
+                      </div>
+                    </form>
+                  )}
                 </>
               ) : (
                 <div className="text-center py-[30px] px-2.5 relative overflow-hidden">
@@ -458,7 +552,7 @@ export default function Index() {
       <div className="bg-white border-b border-black/[0.04] py-[18px] px-5">
         <div className="max-w-[1100px] mx-auto flex justify-center items-center gap-3 sm:gap-10 flex-col sm:flex-row flex-wrap">
           {[
-            { icon: <Users size={13} />, cls: "bg-gold/[0.15] text-navy", text: <><strong className="text-navy font-bold"><CountUp end={500} suffix="+" /></strong> celebrated last year</> },
+            { icon: <Users size={13} />, cls: "bg-gold/[0.15] text-navy", text: <><strong className="text-navy font-bold"><CountUp end={15000} suffix="+" /></strong> expected this year</> },
             { icon: <UtensilsCrossed size={13} />, cls: "bg-pink/[0.12] text-navy", text: <><strong className="text-navy font-bold">Free Prasādam</strong> for everyone</> },
             { icon: <Baby size={13} />, cls: "bg-green/10 text-green", text: <><strong className="text-navy font-bold">Family-friendly</strong> all ages welcome</> },
           ].map((p, i) => (
@@ -480,8 +574,8 @@ export default function Index() {
       <div className="py-[40px] md:py-[55px] px-5" style={{ background: "linear-gradient(135deg, hsl(var(--navy-deep)), hsl(var(--navy)))" }}>
         <div className="max-w-[900px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center">
           {[
-            { end: 15, suffix: "+", label: "Years of Service" },
-            { end: 5000, suffix: "+", label: "Devotees Served" },
+            { end: 45, suffix: "+", label: "Years of Service" },
+            { end: 15000, suffix: "+", label: "Expected Attendees" },
             { end: 50, suffix: "+", label: "Dedicated Volunteers" },
             { end: 100, suffix: "+", label: "Festivals Celebrated" },
           ].map((stat, i) => (
@@ -599,7 +693,7 @@ export default function Index() {
       {/* ═══ SCHEDULE ═══ */}
       <div id="schedule" className="py-[50px] md:py-[70px] px-4 md:px-5 max-w-[1100px] mx-auto">
         <AnimateIn animation="fade-up">
-          <SectionHeader overline="Program Schedule" title="Thursday, 26 March 2026" sub="6:00 PM onwards · All timings are approximate" />
+          <SectionHeader overline="Program Schedule" title="Friday, 27 March 2026" sub="6:30 PM onwards · All timings are approximate" />
         </AnimateIn>
         <AnimateIn animation="fade-up" delay={100}>
           <div className="bg-white rounded-2xl p-[28px_22px] md:p-[45px_50px] shadow-[0_2px_24px_rgba(0,0,0,0.04)]">
@@ -631,7 +725,7 @@ export default function Index() {
           <div className="bg-white rounded-xl border-l-4 border-l-gold p-[22px_26px] flex gap-3.5 items-start max-w-[700px] mx-auto mt-[30px] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
             <Info className="text-gold mt-0.5 flex-shrink-0" size={18} />
             <p className="text-sm text-text-dark leading-relaxed">
-              <strong className="text-navy">Fasting Guidance:</strong> Devotees traditionally fast until noon on Rāma Navamī and then take only fruit and milk. After the madhyāhna period, the fast may be broken with Ekādaśī-style prasādam. If you're new to this, simply come and enjoy — no fasting is required to attend.
+              <strong className="text-navy">Fasting Guidance:</strong> Devotees traditionally observe a complete fast from sunrise to sunset on Rāma Navamī. After sunset, the fast is completed and may be broken with Ekādaśī-style prasādam. If you're new to this, simply come and enjoy — no fasting is required to attend.
             </p>
           </div>
         </AnimateIn>
@@ -674,8 +768,8 @@ export default function Index() {
               <p className="text-[15px] text-white/75 leading-relaxed mb-[22px]">
                 Volunteer for decorations, prasādam distribution, guest welcome, and more. Experience the joy of selfless service.
               </p>
-              <a href="https://srikrishnamandir.org/volunteer/be-a-volunteer-sri-gaura-pur%e1%b9%87ima/" target="_blank" rel="noopener noreferrer" className="inline-block self-center md:self-start bg-pink text-navy py-3.5 px-8 rounded-lg no-underline font-bold text-[15px] transition-all hover:bg-pink-light hover:-translate-y-0.5 cta-glow">
-                <HandHelping className="inline w-4 h-4 mr-1.5 -mt-0.5" /> Sign Up to Volunteer
+              <a href="#register" onClick={scrollTo("register")} className="inline-block self-center md:self-start bg-pink text-navy py-3.5 px-8 rounded-lg no-underline font-bold text-[15px] transition-all hover:bg-pink-light hover:-translate-y-0.5 cta-glow">
+                <HandHelping className="inline w-4 h-4 mr-1.5 -mt-0.5" /> Register & Volunteer
               </a>
             </div>
           </div>
@@ -694,8 +788,8 @@ export default function Index() {
               { q: "Is there a dress code?", a: "There is no strict dress code, but we encourage modest and respectful attire. Traditional Indian clothing is welcome but not required. Please remove shoes before entering the temple hall." },
               { q: "Will food be provided?", a: "Yes! A sumptuous vegetarian feast (prasādam) will be served free to all attendees after the Abhiṣeka ceremony. The food is sanctified, freshly prepared, and absolutely delicious." },
               { q: "Can I bring my children?", a: "Absolutely! The event is family-friendly and children of all ages are welcome. There will be a special children's cultural performance as part of the program. Kids particularly enjoy the drama and prasādam!" },
-              { q: "Do I need to register to attend?", a: "Registration is free and helps us plan for seating and prasādam quantities. Walk-ins are also welcome, but registered attendees get priority seating." },
-              { q: "How long is the event?", a: "The program runs from 6:00 PM to approximately 9:30 PM. You're welcome to arrive at any point and stay as long as you like — there's no obligation to attend the entire program." },
+              { q: "Do I need to register to attend?", a: "Registration is free and helps us plan for seating and prasādam quantities. Walk-ins are welcome on a first-come, first-served basis." },
+              { q: "How long is the event?", a: "The program runs from 6:30 PM to approximately 10:00 PM. You're welcome to arrive at any point and stay as long as you like — there's no obligation to attend the entire program." },
             ].map((faq, i) => (
               <AccordionItem key={i} value={`faq-${i}`} className="border-b border-border last:border-b-0">
                 <AccordionTrigger className="px-6 text-left text-[15px] text-navy hover:no-underline">{faq.q}</AccordionTrigger>
@@ -731,7 +825,7 @@ export default function Index() {
               </div>
               <div className="flex gap-3 mb-3 text-sm text-text-dark">
                 <Clock className="text-gold mt-0.5 flex-shrink-0" size={14} />
-                <span>Thursday, 26 March 2026<br />6:00 PM – 9:30 PM</span>
+                <span>Friday, 27 March 2026<br />6:30 PM – 10:00 PM</span>
               </div>
               <div className="flex gap-3 mb-3 text-sm text-text-dark">
                 <Phone className="text-gold mt-0.5 flex-shrink-0" size={14} />
@@ -758,7 +852,7 @@ export default function Index() {
         </AnimateIn>
         <AnimateIn animation="fade-up" delay={100}>
           <div className="flex justify-center gap-2.5 flex-wrap mt-5">
-            <a href="https://wa.me/?text=Join%20me%20for%20Sri%20Rama%20Navami%202026%20at%20ISKM%20Singapore%20on%20March%2026!%20Free%20entry%2C%20prasadam%20%26%20more.%20Register%3A%20https%3A%2F%2Fsrikrishnamandir.org%2Ffestival%2Fsri-rama-navami-2026%2F" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/?text=Join%20me%20for%20Sri%20Rama%20Navami%202026%20at%20ISKM%20Singapore%20on%20March%2027!%20Free%20entry%2C%20prasadam%20%26%20more.%20Register%3A%20https%3A%2F%2Fsrikrishnamandir.org%2Ffestival%2Fsri-rama-navami-2026%2F" target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 py-2.5 px-5 rounded-full no-underline text-[13px] font-semibold transition-transform hover:-translate-y-0.5 bg-[#25D366] text-white">
               <MessageCircle size={14} /> WhatsApp
             </a>
@@ -786,7 +880,7 @@ export default function Index() {
             <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(22,45,88,0.92), rgba(30,58,110,0.88), rgba(45,74,124,0.92))" }} />
           </div>
           <h2 className="relative z-[1] text-[clamp(1.5rem,3vw,2.2rem)] text-white mb-2">Don't Miss This Sacred Celebration</h2>
-          <p className="relative z-[1] opacity-70 mb-[30px] text-base">Thursday, 26 March 2026 · 6:00 PM · ISKM Singapore</p>
+          <p className="relative z-[1] opacity-70 mb-[30px] text-base">Friday, 27 March 2026 · 6:30 PM · ISKM Singapore</p>
           <a href="#register" onClick={scrollTo("register")}
             className="relative z-[1] inline-block bg-pink text-navy py-4 px-11 rounded-lg no-underline text-base font-bold transition-all shadow-[0_4px_20px_rgba(248,164,192,0.3)] hover:bg-pink-light hover:-translate-y-0.5 cta-glow">
             <ArrowUp className="inline w-4 h-4 mr-1.5 -mt-0.5" /> Register Now — Free
@@ -805,7 +899,7 @@ export default function Index() {
         <div className="scroll-progress w-full" style={{ transform: `scaleX(${scrollProgress / 100})` }} />
         <div className="p-[12px_16px]">
           <a href="#register" onClick={scrollTo("register")} className="block bg-pink text-navy text-center py-3.5 rounded-lg font-bold text-[15px] no-underline cta-glow">
-            <ArrowUp className="inline w-4 h-4 mr-1.5 -mt-0.5" /> Register Free — Mar 26
+            <ArrowUp className="inline w-4 h-4 mr-1.5 -mt-0.5" /> Register Free — Mar 27
           </a>
         </div>
       </div>
@@ -813,7 +907,6 @@ export default function Index() {
       {/* Bottom padding for mobile sticky bar */}
       <div className="h-[70px] md:hidden" />
 
-      {/* Scroll to top */}
       {/* ═══ FLOATING WHATSAPP ═══ */}
       <a
         href="https://wa.me/6562502280?text=Hi%2C%20I%20have%20a%20question%20about%20Sri%20Rama%20Navami%202026"
