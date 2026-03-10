@@ -163,7 +163,8 @@ const VOLUNTEER_CATEGORIES = [
 export default function Index() {
   const countdown = useCountdown();
   const [registered, setRegistered] = useState(false);
-  const [spots, setSpots] = useState(127);
+  const [spots, setSpots] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const [copyText, setCopyText] = useState("Copy Link");
