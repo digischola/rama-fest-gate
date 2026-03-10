@@ -264,7 +264,7 @@ export default function Index() {
         payload.remarks = volRemarks.trim() || null;
         payload.volunteering_categories = volCategories.length > 0 ? volCategories : null;
       }
-      const { error } = await supabase.from('registrations').insert(payload);
+      const { error } = await supabase.from('registrations').insert([payload as any]);
       if (error) throw error;
       setRegistered(true);
       setSpots((s) => s + parseInt(attendees === "5" ? "5" : attendees));
