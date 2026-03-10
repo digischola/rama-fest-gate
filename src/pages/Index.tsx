@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -162,7 +163,8 @@ const VOLUNTEER_CATEGORIES = [
 export default function Index() {
   const countdown = useCountdown();
   const [registered, setRegistered] = useState(false);
-  const [spots, setSpots] = useState(127);
+  const [spots, setSpots] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const [copyText, setCopyText] = useState("Copy Link");
@@ -200,6 +202,19 @@ export default function Index() {
     return () => { emblaApi.off("select", onSelect); };
   }, [emblaApi]);
 
+  // Fetch live registration count
+  useEffect(() => {
+    const fetchCount = async () => {
+      const { data, error } = await supabase.rpc('get_registration_count');
+      if (!error && data !== null) {
+        setSpots(Math.max(data, 120));
+      }
+    };
+    fetchCount();
+    const interval = setInterval(fetchCount, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const measure = () => {
       const el = document.getElementById("top-ribbon");
@@ -221,26 +236,67 @@ export default function Index() {
 
   const totalSteps = volunteer === "yes" ? 2 : 1;
 
+  const buildWhatsAppUrl = (isVolunteer: boolean, catsList?: string[]) => {
+    const phone = "6562502280";
+    const numAtt = attendees === "5" ? "5+" : attendees;
+    if (isVolunteer && catsList && catsList.length > 0) {
+      const cats = catsList.join(", ");
+      const msg = `Hare Kṛṣṇa! 🙏\n\nI've registered as a *volunteer* for Śrī Rāma Navamī 2026.\n\n*Name:* ${name}\n*Attendees:* ${numAtt}\n*Volunteer Categories:* ${cats}\n\nI'm excited to serve! Please coordinate with me before the event.\n\nJai Śrī Rāma! 🏹`;
+      return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    }
+    const msg = `Hare Kṛṣṇa! 🙏\n\nI've registered for Śrī Rāma Navamī 2026.\n\n*Name:* ${name}\n*Attendees:* ${numAtt}\n\n📅 Friday, 27th March 2026\n🕡 6:30 PM – 10:00 PM\n📍 No.9 Lorong 29 Geylang, #03-02, Singapore 388065\n\nLooking forward to it!\nJai Śrī Rāma! 🏹`;
+    return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  };
+
+  const submitRegistration = async (isVolunteer: boolean) => {
+    setSubmitting(true);
+    try {
+      const payload: Record<string, unknown> = {
+        full_name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim() || null,
+        attendees: parseInt(attendees === "5" ? "5" : attendees),
+        volunteer: isVolunteer,
+      };
+      if (isVolunteer) {
+        payload.age = volAge ? parseInt(volAge) : null;
+        payload.gender = volGender || null;
+        payload.remarks = volRemarks.trim() || null;
+        payload.volunteering_categories = volCategories.length > 0 ? volCategories : null;
+      }
+      const { error } = await supabase.from('registrations').insert([payload as any]);
+      if (error) throw error;
+      setRegistered(true);
+      setSpots((s) => s + parseInt(attendees === "5" ? "5" : attendees));
+      // Open WhatsApp in new tab
+      const waUrl = buildWhatsAppUrl(isVolunteer, isVolunteer ? volCategories : undefined);
+      setTimeout(() => window.open(waUrl, "_blank"), 800);
+    } catch (err) {
+      console.error("Registration error:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const handlePage1Next = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
       if (volunteer === "yes") {
         setFormStep(2);
       } else {
-        setRegistered(true);
-        setSpots((s) => s + 1);
+        submitRegistration(false);
       }
     },
-    [volunteer]
+    [volunteer, name, email, phone, attendees]
   );
 
   const handlePage2Submit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      setRegistered(true);
-      setSpots((s) => s + 1);
+      submitRegistration(true);
     },
-    []
+    [name, email, phone, attendees, volAge, volGender, volRemarks, volCategories]
   );
 
   const toggleVolCategory = (cat: string) => {
@@ -474,8 +530,8 @@ export default function Index() {
                           <option value="yes">Yes, I'd love to help!</option>
                         </select>
                       </div>
-                      <button type="submit" className="w-full py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide mt-1 hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow">
-                        {volunteer === "yes" ? "Next — Volunteer Details" : "Register Now — It's Free"}
+                      <button type="submit" disabled={submitting} className="w-full py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide mt-1 hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow disabled:opacity-60 disabled:cursor-not-allowed">
+                        {submitting ? "Registering…" : volunteer === "yes" ? "Next — Volunteer Details" : "Register Now — It's Free"}
                       </button>
                       <div className="flex items-center justify-center gap-1.5 mt-2 text-[11px] text-text-muted-custom">
                         <ShieldCheck className="w-3 h-3 text-green" />
@@ -526,8 +582,8 @@ export default function Index() {
                           className="flex-1 py-3.5 bg-cream text-navy border border-[#e5ded5] rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all hover:bg-cream-warm flex items-center justify-center gap-2">
                           <ArrowLeft size={16} /> Back
                         </button>
-                        <button type="submit" className="flex-[2] py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow">
-                          Submit Registration
+                        <button type="submit" disabled={submitting} className="flex-[2] py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow disabled:opacity-60 disabled:cursor-not-allowed">
+                          {submitting ? "Submitting…" : "Submit Registration"}
                         </button>
                       </div>
                     </form>
@@ -540,7 +596,7 @@ export default function Index() {
                     <Check className="w-7 h-7 text-green" />
                   </div>
                   <h3 className="text-[22px] text-navy mb-2 relative z-[1]">You're Registered!</h3>
-                  <p className="text-sm text-text-muted-custom leading-relaxed relative z-[1]">We've saved your spot for Śrī Rāma Navamī 2026. A confirmation email will be sent shortly.</p>
+                  <p className="text-sm text-text-muted-custom leading-relaxed relative z-[1]">We've saved your spot for Śrī Rāma Navamī 2026. A WhatsApp message is being opened so you can confirm directly with the temple.</p>
                 </div>
               )}
             </div>
