@@ -963,16 +963,6 @@ export default function Index() {
       {/* Bottom padding for mobile sticky bar */}
       <div className="h-[70px] md:hidden" />
 
-      {/* ═══ FLOATING WHATSAPP ═══ */}
-      <a
-        href="https://wa.me/6562502280?text=Hi%2C%20I%20have%20a%20question%20about%20Sri%20Rama%20Navami%202026"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat on WhatsApp"
-        className="fixed bottom-[90px] md:bottom-6 right-4 md:right-6 z-[998] w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-[0_4px_20px_rgba(37,211,102,0.4)] transition-all hover:scale-110 hover:shadow-[0_6px_28px_rgba(37,211,102,0.5)]"
-      >
-        <MessageCircle size={26} fill="white" />
-      </a>
 
       
     </div>
