@@ -582,8 +582,8 @@ export default function Index() {
                           className="flex-1 py-3.5 bg-cream text-navy border border-[#e5ded5] rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all hover:bg-cream-warm flex items-center justify-center gap-2">
                           <ArrowLeft size={16} /> Back
                         </button>
-                        <button type="submit" className="flex-[2] py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow">
-                          Submit Registration
+                        <button type="submit" disabled={submitting} className="flex-[2] py-3.5 bg-pink text-navy border-none rounded-lg font-body text-[15px] font-bold cursor-pointer transition-all tracking-wide hover:bg-pink-light hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(248,164,192,0.35)] cta-glow disabled:opacity-60 disabled:cursor-not-allowed">
+                          {submitting ? "Submitting…" : "Submit Registration"}
                         </button>
                       </div>
                     </form>
